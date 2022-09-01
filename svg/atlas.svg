@@ -26,10 +26,10 @@
 <path style="fill: rgb(17, 17, 17);" d="M 290 63 L 293 64 L 290 72 L 288 70 L 290 67 L 287 66 L 290 63 Z"/>
 <path style="fill: rgb(17, 17, 17);" d="M 272 55 L 287 55 L 287 90 L 293 96 L 289 97 L 283 92 L 280 61 L 278 92 L 271 97 L 267 96 L 274 90 L 272 55 Z"/>
 </g>
-<rect width="251" height="251" style="fill: rgb(217, 176, 105);" x="110" y="140"/>
-<path style="fill: rgba(0, 0, 0, 0.09);" d="M 110 308 C 213 323 313 293 361 300 L 361 391 L 110 391 L 110 308 Z"/>
-<ellipse style="fill: rgba(0, 0, 0, 0.23);" cx="260" cy="354" rx="15" ry="3" transform="matrix(1, 0, 0.013244, 1, -4.679406, 0.677853)"/>
-<g transform="matrix(1, 0, 0, 1, 40, 260)">
+<rect width="251" height="251" style="fill: rgb(217, 176, 105);" x="110" y="110"/>
+<path style="fill: rgba(0, 0, 0, 0.09);" d="M 110 278 C 213 293 313 263 361 270 L 361 361 L 110 361 L 110 278 Z"/>
+<ellipse style="fill: rgba(0, 0, 0, 0.23);" cx="260" cy="354" rx="15" ry="3" transform="matrix(1, 0, 0.013244, 1, -4.679406, -29.322147)"/>
+<g transform="matrix(1, 0, 0, 1, 40, 230)">
 <path style="fill: rgb(255, 255, 255);" d="M 215 24 L 223 24 L 232 28 L 236 46 L 233 64 L 230 63 L 231 48 L 228 35 L 227 55 L 227 90 L 233 96 L 229 97 L 223 92 L 220 61 L 218 92 L 211 97 L 207 96 L 214 90 L 212 55 L 211 35 L 209 47 L 209 61 L 206 63 L 204 46 L 206 29 L 215 24 Z"/>
 <path style="fill: rgb(17, 17, 17);" d="M 215 24 L 215 22 L 214 21 L 214 17 L 212 12 L 214 11 L 214 6 L 220 4 L 225 8 L 225 11 L 227 12 L 225 17 L 224 22 L 223 23 L 223 24 L 219 34 L 215 24 Z"/>
 <path style="fill: rgb(17, 17, 17);" d="M 206 63 L 209 61 L 212 64 L 210 65 L 211 70 L 208 70 L 206 63 Z"/>
@@ -37,8 +37,8 @@
 </g>
 <path style="fill: rgb(17, 17, 17);" d="M 335 24 L 335 22 L 334 21 L 334 17 L 332 12 L 334 11 L 334 6 L 340 4 L 345 8 L 345 11 L 347 12 L 345 17 L 344 22 L 343 23 L 343 24 L 352 28 L 356 46 L 353 64 L 350 72 L 348 70 L 350 67 L 347 66 L 350 63 L 351 48 L 348 35 L 348 60 L 347 90 L 353 96 L 349 97 L 343 92 L 340 61 L 338 92 L 331 97 L 327 96 L 334 90 L 332 60 L 331 35 L 329 47 L 329 61 L 332 64 L 330 65 L 331 70 L 328 70 L 326 63 L 324 46 L 326 29 L 335 24 Z"/>
 <path style="fill: rgb(255, 255, 255);" d="M 335 24 C 335 25 343 25 343 24 L 339 40 L 335 24 Z"/>
-<rect style="fill: rgb(255, 255, 255);" x="279" y="243" width="48" height="32" rx="4" ry="4"/>
-<text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 8.9px;" x="287" y="266">...</text>
+<rect style="fill: rgb(255, 255, 255);" x="279" y="213" width="48" height="32" rx="4" ry="4"/>
+<text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 8.9px;" x="287" y="236">...</text>
 <path style="fill: rgb(255, 255, 255);" d="M 395 24 L 403 24 L 412 28 L 416 46 L 413 64 L 410 63 L 411 48 L 408 35 L 407 55 L 407 90 L 413 96 L 409 97 L 403 92 L 400 61 L 398 92 L 391 97 L 387 96 L 394 90 L 392 55 L 391 35 L 389 47 L 389 61 L 386 63 L 384 46 L 386 29 L 395 24 Z"/>
 <path style="fill: rgb(17, 17, 17);" d="M 395 24 L 395 22 L 394 21 L 394 17 L 392 12 L 394 11 L 394 6 L 400 4 L 405 8 L 405 11 L 407 12 L 405 17 L 404 22 L 403 23 L 403 24 L 399 43 L 395 24 Z"/>
 <path style="fill: rgb(17, 17, 17);" d="M 386 63 L 389 61 L 392 64 L 390 65 L 391 70 L 388 70 L 386 63 Z"/>
@@ -59,4 +59,12 @@
 <path style="fill: rgb(255, 255, 255);" d="M 504 90 L 508 92 L 501 97 L 497 96 L 504 90 Z"/>
 <path style="fill: rgb(255, 255, 255);" d="M 513 92 L 517 90 L 523 96 L 519 97 L 513 92 Z"/>
 <path style="fill: none; stroke: rgb(255, 255, 255); stroke-linecap: round; stroke-linejoin: round;" d="M 505 12 L 505 15 L 509 15 L 510 12 L 511 15 L 515 15 L 515 12 L 505 12 Z"/>
+<path style="fill: rgb(17, 17, 17);" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 50 4 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 62 28 L 66 46 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 L 61 48 L 58 35 L 57 55 L 57 90 L 63 96 L 59 97 L 53 92 L 50 61 L 48 92 L 41 97 L 37 96 L 44 90 L 42 55 L 41 35 L 39 47 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 L 34 46 L 36 29 L 45 24 Z"/>
+<path style="fill: rgb(255, 255, 255);" d="M 45 24 L 53 24 L 62 28 L 66 46 L 61 48 L 58 35 L 57 55 L 42 55 L 41 35 L 39 47 L 34 46 L 36 29 L 45 24 Z"/>
+<path style="fill: rgb(17, 17, 17);" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 50 4 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 49 34 L 45 24 Z"/>
+<path style="fill: rgb(17, 17, 17);" d="M 36 63 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 Z"/>
+<path style="fill: rgb(17, 17, 17);" d="M 60 63 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 Z"/>
+<path style="fill: rgb(255, 255, 255);" d="M 44 90 L 48 92 L 41 97 L 37 96 L 44 90 Z"/>
+<path style="fill: rgb(255, 255, 255);" d="M 53 92 L 57 90 L 63 96 L 59 97 L 53 92 Z"/>
+<path style="fill: none; stroke: rgb(255, 255, 255); stroke-linecap: round; stroke-linejoin: round;" d="M 45 12 L 45 15 L 49 15 L 50 12 L 51 15 L 55 15 L 55 12 L 45 12 Z"/>
 </svg>

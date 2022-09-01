@@ -16,13 +16,14 @@ body {
 svg {
 	display: none;
 }
-.B {
+#B {
 	position: fixed;
 	padding: .5em .75em;
 	background: #fff; color: #333;
 	border-radius: .75em;
+	display: none;
 }
-.B:after {
+#B:after {
 	content: "";
 	position: absolute;
 	left: 1em; bottom: -.9em;
@@ -34,7 +35,7 @@ svg {
 </style>
 </head>
 <body>
-<svg id="Stage">
+<svg id="S">
 <g id="Test">
 	<path style="fill: #111;" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 50 4 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 62 28 L 66 46 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 L 61 48 L 58 35 L 57 55 L 57 90 L 63 96 L 59 97 L 53 92 L 50 61 L 48 92 L 41 97 L 37 96 L 44 90 L 42 55 L 41 35 L 39 47 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 L 34 46 L 36 29 L 45 24 Z"></path>
 	<path style="fill: #fff;" d="M 45 24 L 53 24 L 62 28 L 66 46 L 61 48 L 58 35 L 57 55 L 42 55 L 41 35 L 39 47 L 34 46 L 36 29 L 45 24 Z"></path>
@@ -46,6 +47,7 @@ svg {
 	<path style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round;" d="M 45 12 L 45 15 L 49 15 L 50 12 L 51 15 L 55 15 L 55 12 L 45 12 Z"></path>
 </g>
 </svg>
+<div id="B"></div>
 </body>
 <script src="src.js"></script>
 </html>

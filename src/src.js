@@ -21,26 +21,20 @@ let stage,
 	stageWidth,
 	stageHeight,
 	centerX,
-	centerY
+	centerY,
+	bubble
 
 function say(who, what) {
-	if (!who.bubble) {
-		const e = document.createElement("div")
-		e.className = "B"
-		document.body.appendChild(e)
-		who.bubble = e
-	}
-	const b = who.bubble
 	// Set this for getBoundingClientRect() to work as expected.
-	b.style.left = "0px"
-	b.style.top = "0px"
-	b.style.display = "block"
-	b.innerHTML = what
+	bubble.style.left = "0px"
+	bubble.style.top = "0px"
+	bubble.style.display = "block"
+	bubble.innerHTML = what
 	const rw = who.getBoundingClientRect(),
-		rb = b.getBoundingClientRect()
-	b.style.left = (rw.x || rw.left) + "px"
-	b.style.top = ((rw.y || rw.top) - rb.height -
-		parseFloat(getComputedStyle(b).fontSize) * 1.5
+		rb = bubble.getBoundingClientRect()
+	bubble.style.left = (rw.x || rw.left) + "px"
+	bubble.style.top = ((rw.y || rw.top) - rb.height -
+		parseFloat(getComputedStyle(bubble).fontSize) * 1.5
 	) + "px"
 }
 
@@ -50,12 +44,9 @@ function setup(name) {
 }
 
 function show(list) {
+	bubble.style.display = "none"
 	for (let key in props) {
-		const p = props[key]
-		p.style.visibility = "hidden"
-		if (p.bubble) {
-			p.bubble.style.display = "none"
-		}
+		props[key].style.visibility = "hidden"
 	}
 	list.forEach((o) => o.style.visibility = "visible")
 }
@@ -89,7 +80,8 @@ function resize() {
 }
 
 window.onload = function() {
-	stage = document.getElementById("Stage");
+	stage = document.getElementById("S");
+	bubble = document.getElementById("B");
 	[...stage.getElementsByTagName("g")].forEach(e => props[e.id] = e)
 	window.onresize = resize
 	resize()
