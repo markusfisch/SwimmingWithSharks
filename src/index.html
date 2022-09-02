@@ -19,14 +19,14 @@ svg {
 #B {
 	position: fixed;
 	padding: .5em .75em;
+	max-width: 90vw;
 	background: #fff; color: #333;
 	border-radius: .75em;
 	display: none;
 }
-#B:after {
-	content: "";
+#BP {
 	position: absolute;
-	left: 1em; bottom: -.9em;
+	left: calc(50% - .5em); bottom: -.9em;
 	width: 0; height: 0;
 	border-left: .5em solid transparent;
 	border-right: .5em solid transparent;
@@ -37,17 +37,17 @@ svg {
 <body>
 <svg id="S">
 <g id="Test">
-	<path style="fill: #111;" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 50 4 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 62 28 L 66 46 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 L 61 48 L 58 35 L 57 55 L 57 90 L 63 96 L 59 97 L 53 92 L 50 61 L 48 92 L 41 97 L 37 96 L 44 90 L 42 55 L 41 35 L 39 47 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 L 34 46 L 36 29 L 45 24 Z"></path>
+	<path style="fill: #111;" d="M 34 46 L 39 47 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 L 34 46 Z"></path>
 	<path style="fill: #fff;" d="M 45 24 L 53 24 L 62 28 L 66 46 L 61 48 L 58 35 L 57 55 L 42 55 L 41 35 L 39 47 L 34 46 L 36 29 L 45 24 Z"></path>
 	<path style="fill: #111;" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 50 4 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 49 34 L 45 24 Z"></path>
-	<path style="fill: #111;" d="M 36 63 L 39 61 L 42 64 L 40 65 L 41 70 L 38 70 L 36 63 Z"></path>
-	<path style="fill: #111;" d="M 60 63 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 Z"></path>
 	<path style="fill: #fff;" d="M 44 90 L 48 92 L 41 97 L 37 96 L 44 90 Z"></path>
 	<path style="fill: #fff;" d="M 53 92 L 57 90 L 63 96 L 59 97 L 53 92 Z"></path>
 	<path style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round;" d="M 45 12 L 45 15 L 49 15 L 50 12 L 51 15 L 55 15 L 55 12 L 45 12 Z"></path>
+	<path style="fill: #111;" d="M 61 48 L 66 46 L 63 64 L 60 72 L 58 70 L 60 67 L 57 66 L 60 63 L 61 48 Z"></path>
+	<path style="fill: #111;" d="M 42 55 L 57 55 L 57 90 L 53 92 L 50 61 L 48 92 L 44 90 L 42 55 Z"></path>
 </g>
 </svg>
-<div id="B"></div>
+<div id="B"><div id="BM"></div><div id="BP"></div></div>
 </body>
 <script src="src.js"></script>
 </html>
