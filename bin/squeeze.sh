@@ -24,7 +24,7 @@ do
 	}
 	# remove optional blanks
 	echo -n "$REPLY" | sed '
-s/\([ML]\) /\1/g;
+s/\([CLM]\) /\1/g;
 s/ {/{/g;
 s/, /,/g;
 s/: /:/g;
