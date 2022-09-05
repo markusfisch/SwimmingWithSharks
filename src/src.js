@@ -1,23 +1,66 @@
 "use strict"
 
-const setBackground = (color) => document.documentElement.style.background = color,
-	scenes = {
-		opening: {
+const scenes = {
+		Stern: {
 			setup: function() {
-				setBackground("#d9b069")
-				props.Test.style.transform = centerScale(1, 50, 50)
-				show([props.Test])
-				//say(props.Test, "Hello!")
-				say(props.Test, "Hello! Hello!")
-				//say(props.Test, "Hello! Hello!<br/>I don't know why you say<br/>Good Bye<br/>I say Hello!")
-				//say(props.Test, "Hello! Hello!<br/>I don't know why you say Good Bye, I say Hello! Hellooooo! You say yes, I say no, oh nooo. You say Good Bye, I say Hello!")
+				props.Boat.style.transform = centerScale(1, 230, 22)
+				props.Dave.style.transform = centerScale(1)
+				show([props.Boat, props.Stern, props.Dave])
+				document.getElementById("GoInside").onclick = function() {
+					setup("Inside")
+				}
+				document.getElementById("GoSteer").onclick = function() {
+					setup("Steer")
+				}
+				document.getElementById("GoUnderwater").onclick = function() {
+					setup("Underwater")
+				}
+				say(props.Dave, "Hello! Hello!")
+			}
+		},
+		Inside: {
+			setup: function() {
+				props.Boat.style.transform = centerScale(1, -12, -5)
+				props.Dave.style.transform = centerScale(1)
+				show([props.Boat, props.Inside, props.Dave])
+				say(props.Dave, "I'm in!")
+			}
+		},
+		Bow: {
+			setup: function() {
+				props.Boat.style.transform = centerScale(1, -230, 62)
+				props.Dave.style.transform = centerScale(1)
+				show([props.Boat, props.Bow, props.Dave])
+				say(props.Dave, "I'm the king of the world!")
+			}
+		},
+		Steer: {
+			setup: function() {
+				props.Boat.style.transform = centerScale(1, 20, 122)
+				props.Dave.style.transform = centerScale(1)
+				show([props.Boat, props.Steer, props.Dave])
+				say(props.Dave, "Who's your captain?")
+			}
+		},
+		Storage: {
+			setup: function() {
+				props.Boat.style.transform = centerScale(1, -200, -20)
+				show([props.Boat, props.Storage])
+			}
+		},
+		Underwater: {
+			setup: function() {
+				props.Boat.style.transform = centerScale(1, 250, -250)
+				props.Dave.style.transform = centerScale(1)
+				show([props.Boat, props.Dave])
+				say(props.Dave, "Under the sea…")
 			}
 		},
 	},
 	props = {},
 	state = {
 		inventory: [],
-		scene: scenes.opening
+		scene: scenes.Stern
 	}
 
 let centerX,

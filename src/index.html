@@ -20,7 +20,7 @@ svg {
 	position: fixed;
 	padding: .5em .75em;
 	max-width: 90vw;
-	background: #fff; color: #333;
+	background: #111; color: #fff;
 	border-radius: .75em;
 	display: none;
 }
@@ -30,13 +30,65 @@ svg {
 	width: 0; height: 0;
 	border-left: .5em solid transparent;
 	border-right: .5em solid transparent;
-	border-top: 1em solid #fff;
+	border-top: 1em solid #111;
 }
 </style>
 </head>
 <body>
 <svg id="S">
-<g id="Test">
+<defs>
+	<linearGradient gradientUnits="userSpaceOnUse" x1="1573" y1="-722" x2="1573" y2="-115" id="sky" gradientTransform="matrix(-0.262139, 0, 0, 0.262139, 409.172849, 83.528654)">
+		<stop offset="0" style="stop-color: rgba(113, 182, 255, 1)"></stop>
+		<stop offset="1" style="stop-color: rgba(11, 129, 255, 1)"></stop>
+	</linearGradient>
+	<linearGradient gradientUnits="userSpaceOnUse" x1="1573" y1="722" x2="1573" y2="1553" id="sea" gradientTransform="matrix(0.345419, 0, 0, 0.070454, -546.513885, 52.72599)">
+		<stop offset="0" style="stop-color: rgba(43, 41, 170, 1)"></stop>
+		<stop offset="1" style="stop-color: rgba(22, 21, 88, 1)"></stop>
+	</linearGradient>
+</defs>
+<g id="Boat">
+	<rect x="-2000" y="-2000" width="4000" height="2104" style="fill: url(#sky);"></rect>
+	<rect x="-2000" y="104" width="3995" height="335" style="fill: url(#sea);"></rect>
+	<path style="fill: rgb(255, 255, 255);" d="M -213 134 L -241 142 C -241 142 -242 174 -242 174 L -180 174 C -180 174 -167 154 -167 154"></path>
+	<path style="fill: rgb(255, 255, 255);" d="M -265 54 L -108 48 L -65 -29 L 46 -29 L 54 -62 L 74 -69 L 98 -29 L 243 33 L 346 29 C 217 229 -272 218 -265 54 Z"></path>
+	<rect x="-2000" y="104" width="3995" height="335" style="fill: rgba(43, 41, 170, 0.5);"></rect>
+	<path style="fill: rgb(13, 130, 255);" d="M 104 -13 L 189 25 L 64 30 L 59 -12 L 104 -13 Z"></path>
+	<path style="fill: rgb(13, 130, 255);" d="M -48 -11 L -68 35 L 56 31 L 51 -12 L -48 -11 Z"></path>
+	<path style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 4px; stroke-linejoin: round; stroke-linecap: round;" d="M 343 31 L 365 2 L 152 38"></path>
+	<path style="fill: rgb(216, 216, 216); stroke: rgb(255, 255, 255); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round;" d="M 312 32 L 318 11"></path>
+	<path style="fill: rgb(216, 216, 216); stroke: rgb(255, 255, 255); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round;" d="M 270 34 L 274 18"></path>
+	<g id="Stern">
+		<path style="stroke-width: 2px; fill: rgb(240, 240, 240); stroke-linejoin: round;" d="M -257 54 C -259 57 -252 81 -251 79 L -100 79 L -63 -11 L -75 -11 L -108 48 L -257 54 Z"></path>
+		<path style="stroke-width: 2px; stroke-linejoin: round; fill: rgb(202, 202, 202);" d="M -255 68 L -251 79 L -100 79 L -95 66 L -255 68 Z"></path>
+		<path style="stroke: rgb(210, 0, 0); stroke-width: 2px; stroke-linejoin: round; fill: none; stroke-linecap: round;" d="M -257 54 C -258 59 -254 76 -251 79 L -100 79 L -63 -11 L -75 -11"></path>
+		<path id="GoUnderwater" style="fill: rgba(255, 255, 255, 0.27);" d="M -299 63 L -281 63 L -290 72 L -299 63 Z"></path>
+		<path id="GoSteer" style="fill: rgba(255, 255, 255, 0.27);" d="M -98 -25 L -80 -25 L -89 -34 L -98 -25 Z"></path>
+		<path id="GoInside" style="fill: rgba(255, 255, 255, 0.27);" d="M -109 16 L -118 32 L -106 29 L -109 16 Z"></path>
+	</g>
+	<g id="Steer">
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(202, 202, 202);" d="M -65 -29 C -65 -29 -69 -22 -69 -22 L 45 -22 L 47 -29 L -65 -29 Z"></path>
+		<path style="stroke: rgb(210, 0, 0); stroke-width: 2px; stroke-linejoin: round; fill: none; stroke-linecap: round;" d="M -69 -22 L 45 -22 L 54 -62"></path>
+	</g>
+	<path style="fill: rgb(255, 255, 255);" d="M -26 -71 L -19 -26 L 10 -26 L 7 -45 L -11 -40 C -11 -40 -19 -79 -19 -79 L -26 -71 Z"></path>
+	<g id="Bow">
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(202, 202, 202);" d="M 234 29 L 226 39 L 328 35 L 334 29"></path>
+		<path style="stroke: rgb(210, 0, 0); stroke-width: 2px; stroke-linejoin: round; fill: none; stroke-linecap: round;" d="M 234 29 L 226 39 L 328 35 L 334 29"></path>
+	</g>
+	<g id="Inside">
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(240, 240, 240);" d="M -53 -15 L -93 81 L -48 116 L 163 112 L 222 33 L 106 -17 L -53 -15 Z"></path>
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(202, 202, 202);" d="M -36 97 L -93 81 L -48 116 L 163 112 L 222 33 L 163 92 L -36 97 Z"></path>
+		<path style="fill: rgb(202, 202, 202);" d="M 104 -13 L 189 25 L 64 30 L 59 -12 L 104 -13 Z"></path>
+		<path style="fill: rgb(202, 202, 202);" d="M -48 -11 L -68 35 L 56 31 L 51 -12 L -48 -11 Z"></path>
+		<path style="stroke: rgb(210, 1, 0); stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none;" d="M -53 -15 L -93 81 L -48 116 L 163 112 L 222 33 L 106 -17 L -53 -15 Z"></path>
+	</g>
+	<g id="Storage">
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(240, 240, 240);" d="M 325 41 C 287 82 259 103 200 126 L 171 113 L 221 46 L 325 41 Z"></path>
+		<path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: rgb(202, 202, 202);" d="M 185 94 L 246 105 C 246 105 218 119 200 126 L 171 113 L 185 94 Z"></path>
+		<path style="stroke: rgb(210, 1, 0); stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none;" d="M 325 41 C 287 82 259 103 200 126 L 171 113 L 221 46 L 325 41 Z"></path>
+	</g>
+	<path style="fill: rgb(11, 11, 46);" d="M -389 438 L -261 425 C -261 425 -134 434 -134 434 L 11 416 L 170 436 L 300 417 L 561 439 L 2000 439 L 2000 2000 L -2000 2000 L -2000 439 L -389 439 L -389 438 Z"></path>
+</g>
+<g id="Dave">
 	<path style="fill: rgb(17, 17, 17);" d="M 45 24 L 45 22 L 44 21 L 44 17 L 42 12 L 44 11 L 44 6 L 52 2 L 55 8 L 55 11 L 57 12 L 55 17 L 54 22 L 53 23 L 53 24 L 62 30 L 66 46 L 63 63 L 61 69 L 59 71 L 60 65 L 58 66 L 60 61 L 61 48 L 58 36 L 57 55 L 57 90 L 63 96 L 59 97 L 53 92 L 50 61 L 48 92 L 41 97 L 37 96 L 44 90 L 42 55 L 41 36 L 39 47 L 39 61 L 42 66 L 40 65 L 40 71 L 38 70 L 36 63 L 34 46 L 36 30 L 45 24 Z"></path>
 	<path style="fill: rgb(255, 255, 255);" d="M 42 55 L 57 55 L 58 72 L 51 73 L 50 65 L 50 73 L 42 72 L 42 55 Z"></path>
 </g>
