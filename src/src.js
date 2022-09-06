@@ -3,18 +3,20 @@
 const scenes = {
 		Stern: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, 230, 22)
+				props.Boat.style.transform = centerScale(1, 230, 24)
 				props.Dave.style.transform = centerScale(1)
 				props.Sheryl.style.transform = centerScale(1, -50)
-				show([props.Boat, props.Stern, props.Dave, props.Sheryl])
-				document.getElementById("GoInside").onclick = function() {
-					setup("Inside")
+				props.Googles.style.transform = centerScale(.3, -49, -31)
+				show([props.Boat, props.Stern, props.Dave, props.Sheryl,
+					props.Watch, props.Googles])
+				document.getElementById("SternInside").onclick = function() {
+					go("Inside")
 				}
-				document.getElementById("GoSteer").onclick = function() {
-					setup("Steer")
+				document.getElementById("SternSteer").onclick = function() {
+					go("Steer")
 				}
-				document.getElementById("GoUnderwater").onclick = function() {
-					setup("Underwater")
+				document.getElementById("SternUnderwater").onclick = function() {
+					go("Underwater")
 				}
 				say(props.Dave, "Hello! Hello!")
 			}
@@ -23,19 +25,23 @@ const scenes = {
 			setup: function() {
 				props.Boat.style.transform = centerScale(1, -12, -5)
 				props.Sheryl.style.transform = centerScale(1, -110)
+				props.Googles.style.transform = centerScale(.3, -125, 55) +
+					"rotateZ(-80deg)"
 				props.Dave.style.transform = centerScale(1, -75, 10)
 				props.Skipper.style.transform = centerScale(1, -18, 20)
 				props.Amanda.style.transform = centerScale(1, 45)
 				props.Bruce.style.transform = centerScale(1, 85, 5)
 				show([props.Boat, props.Inside,
-					props.Dave, props.Sheryl, props.Amanda, props.Bruce,
+					props.Dave,
+					props.Sheryl, props.Watch, props.Googles,
+					props.Amanda, props.Bruce,
 					props.Skipper])
 				say(props.Dave, "What happened?")
 			}
 		},
 		Bow: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, -230, 62)
+				props.Boat.style.transform = centerScale(1, -230, 64)
 				props.Dave.style.transform = centerScale(1)
 				show([props.Boat, props.Bow, props.Dave])
 				say(props.Dave, "I'm the king of the world!")
@@ -43,9 +49,13 @@ const scenes = {
 		},
 		Steer: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, 20, 122)
+				props.Boat.style.transform = centerScale(1, 20, 124)
 				props.Dave.style.transform = centerScale(1)
-				show([props.Boat, props.Steer, props.Dave])
+				props.Sheryl.style.transform = centerScale(1, -75)
+				props.Googles.style.transform = centerScale(.3, -90, 55) +
+					"rotateZ(-80deg)"
+				show([props.Boat, props.Steer, props.Dave,
+					props.Sheryl, props.Watch, props.Googles])
 				say(props.Dave, "Who's your captain?")
 			}
 		},
@@ -59,7 +69,9 @@ const scenes = {
 			setup: function() {
 				props.Boat.style.transform = centerScale(1, 250, -250)
 				props.Dave.style.transform = centerScale(1)
-				show([props.Boat, props.Dave])
+				props.Shark.style.transform = centerScale(1, 100, -50)
+				props.Key.style.transform = centerScale(.5, -40, 150)
+				show([props.Boat, props.Dave, props.Shark, props.Key])
 				say(props.Dave, "Under the sea…")
 			}
 		},
@@ -109,7 +121,7 @@ function show(list) {
 	list.forEach((o) => o.style.visibility = "visible")
 }
 
-function setup(name) {
+function go(name) {
 	state.scene = scenes[name]
 	state.scene.setup()
 }
