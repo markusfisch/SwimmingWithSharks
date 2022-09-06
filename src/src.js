@@ -5,7 +5,8 @@ const scenes = {
 			setup: function() {
 				props.Boat.style.transform = centerScale(1, 230, 22)
 				props.Dave.style.transform = centerScale(1)
-				show([props.Boat, props.Stern, props.Dave])
+				props.Sheryl.style.transform = centerScale(1, -50)
+				show([props.Boat, props.Stern, props.Dave, props.Sheryl])
 				document.getElementById("GoInside").onclick = function() {
 					setup("Inside")
 				}
@@ -21,9 +22,15 @@ const scenes = {
 		Inside: {
 			setup: function() {
 				props.Boat.style.transform = centerScale(1, -12, -5)
-				props.Dave.style.transform = centerScale(1)
-				show([props.Boat, props.Inside, props.Dave])
-				say(props.Dave, "I'm in!")
+				props.Sheryl.style.transform = centerScale(1, -110)
+				props.Dave.style.transform = centerScale(1, -75, 10)
+				props.Skipper.style.transform = centerScale(1, -18, 20)
+				props.Amanda.style.transform = centerScale(1, 45)
+				props.Bruce.style.transform = centerScale(1, 85, 5)
+				show([props.Boat, props.Inside,
+					props.Dave, props.Sheryl, props.Amanda, props.Bruce,
+					props.Skipper])
+				say(props.Dave, "What happened?")
 			}
 		},
 		Bow: {
