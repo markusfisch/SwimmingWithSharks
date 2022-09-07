@@ -9,15 +9,6 @@ const scenes = {
 				props.Googles.style.transform = centerScale(.3, -49, -31)
 				show([props.Boat, props.Stern, props.Dave, props.Sheryl,
 					props.Watch, props.Googles])
-				document.getElementById("SternInside").onclick = function() {
-					go("Inside")
-				}
-				document.getElementById("SternSteer").onclick = function() {
-					go("Steer")
-				}
-				document.getElementById("SternUnderwater").onclick = function() {
-					go("Underwater")
-				}
 				say(props.Dave, "Hello! Hello!")
 			}
 		},
@@ -42,7 +33,7 @@ const scenes = {
 		Bow: {
 			setup: function() {
 				props.Boat.style.transform = centerScale(1, -230, 64)
-				props.Dave.style.transform = centerScale(1)
+				props.Dave.style.transform = centerScale(1, -30, -2)
 				show([props.Boat, props.Bow, props.Dave])
 				say(props.Dave, "I'm the king of the world!")
 			}
@@ -70,8 +61,9 @@ const scenes = {
 				props.Boat.style.transform = centerScale(1, 250, -250)
 				props.Dave.style.transform = centerScale(1)
 				props.Shark.style.transform = centerScale(1, 100, -50)
-				props.Key.style.transform = centerScale(.5, -40, 150)
-				show([props.Boat, props.Dave, props.Shark, props.Key])
+				props.Key.style.transform = centerScale(.5, -40, 130)
+				show([props.Boat, props.Underwater,
+					props.Dave, props.Shark, props.Key])
 				say(props.Dave, "Under the sea…")
 			}
 		},
@@ -159,6 +151,15 @@ window.onload = function() {
 	bubble.m = document.getElementById("BM")
 	bubble.p = document.getElementById("BP")
 	;[...document.getElementsByTagName("g")].forEach(e => props[e.id] = e)
+	;["SternInside", "SternSteer", "SternBow", "SternUnderwater",
+		"SteerStern",
+		"BowStern",
+		"InsideStern", "InsideStorage",
+		"StorageInside",
+		"UnderwaterStern"
+	].forEach(id => document.getElementById(id).onclick = function() {
+		go(id.replace(/^[A-Z][a-z]*/, ""))
+	})
 	window.onresize = resize
 	resize()
 }
