@@ -69,7 +69,7 @@
 <path style="fill: rgb(217, 176, 105);" d="M 325 41 C 287 82 259 103 200 126 L 159 128 L 221 46 L 325 41 Z"/>
 <path style="fill: rgb(183, 148, 88);" d="M 185 94 L 246 105 C 246 105 218 119 200 126 L 159 128 L 185 94 Z"/>
 <path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none; stroke: rgb(0, 0, 0);" d="M 325 41 C 287 82 259 103 200 126 L 159 128 L 221 46 L 325 41 Z"/>
-<g transform="matrix(0, 1, -1, 0, 281, 11)">
+<g transform="matrix(0, 1, -1, 0, 330, 10)">
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="StorageInside"/>
 </g>
 </g>

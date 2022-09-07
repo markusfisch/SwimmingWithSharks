@@ -6,10 +6,12 @@ const scenes = {
 				props.Boat.style.transform = centerScale(230, 24)
 				props.Dave.style.transform = centerScale()
 				props.Sheryl.style.transform = centerScale(-50)
-				props.Googles.style.transform = centerScale(-49, -31, .3)
+				props.Googles.style.transform = centerScale(-65, 55, .3) +
+					"rotateZ(-80deg)"
 				show([props.Boat, props.Stern,
 					props.Dave,
-					props.Sheryl, props.Watch, props.Googles])
+					props.Sheryl, props.Watch, props.Googles
+				])
 				say(props.Dave, "Hello! Hello!")
 			}
 		},
@@ -23,12 +25,24 @@ const scenes = {
 				props.Skipper.style.transform = centerScale(-18, 20)
 				props.Amanda.style.transform = centerScale(45)
 				props.Bruce.style.transform = centerScale(85, 5)
+				props.Skipper.onclick = function() {
+					say(props.Dave, "He looks unharmed. Apart from that little scratch on his arm.")
+				}
 				show([props.Boat, props.Inside,
 					props.Dave,
 					props.Sheryl, props.Watch, props.Googles,
 					props.Amanda, props.Bruce,
-					props.Skipper])
-				say(props.Dave, "What happened?")
+					props.Skipper
+				])
+				say([props.Dave, "What happened?",
+					props.Amanda, "Oh my god, he just collapsed!",
+					props.Bruce, "Maybe it's the salmon mousse?",
+					props.Amanda, "Don't be ridiculous! We all ate the salmon mousse!",
+					props.Bruce, "Maybe he was allergic?",
+					props.Amanda, "But he served it to us!",
+					props.Sheryl, "Maybe it was a heart attack then?",
+					props.Dave, "I don't know. I'm not a doctor. Let's see…",
+				])
 			}
 		},
 		Bow: {
@@ -36,7 +50,8 @@ const scenes = {
 				props.Boat.style.transform = centerScale(-230, 64)
 				props.Dave.style.transform = centerScale(-30, -2)
 				show([props.Boat, props.Bow,
-					props.Dave])
+					props.Dave
+				])
 				say(props.Dave, "I'm the king of the world!")
 			}
 		},
@@ -49,14 +64,21 @@ const scenes = {
 					"rotateZ(-80deg)"
 				show([props.Boat, props.Steer,
 					props.Dave,
-					props.Sheryl, props.Watch, props.Googles])
-				say(props.Dave, "Who's your captain?")
+					props.Sheryl, props.Watch, props.Googles
+				])
+				say([props.Dave, "Who's your captain?",
+					props.Sheryl, "Not you."
+				])
 			}
 		},
 		Storage: {
 			setup: function() {
 				props.Boat.style.transform = centerScale(-200, -20)
-				show([props.Boat, props.Storage])
+				props.DaveLeaning.style.transform = centerScale(-43, 10)
+				show([props.Boat, props.Storage,
+					props.DaveLeaning
+				])
+				say(props.DaveLeaning, "Hm, what do we have here?")
 			}
 		},
 		Underwater: {
@@ -68,7 +90,8 @@ const scenes = {
 				show([props.Boat, props.Underwater,
 					props.Dave,
 					props.Shark,
-					props.Key])
+					props.Key
+				])
 				say(props.Dave, "Under the sea…")
 			}
 		},
@@ -84,6 +107,10 @@ let centerX,
 	bubble
 
 function say(who, what) {
+	const a = Array.isArray(who) ? who : [who, what]
+	who = a.shift()
+	what = a.shift()
+	clear()
 	// Set this for getBoundingClientRect() to work as expected.
 	bubble.style.left = "0px"
 	bubble.style.top = "0px"
@@ -104,9 +131,23 @@ function say(who, what) {
 	bubble.style.top = ((whoRect.y || whoRect.top) -
 		bubbleRect.height - margin * 1.5) + "px"
 	bubble.p.style.left = (cx - x) + "px"
+	bubble.time = Date.now()
+	bubble.next = function() {
+		a.length > 0 ? say(a) : clear()
+	}
+	bubble.tid = setTimeout(bubble.next,
+		1000 + 200 * what.split(' ').length)
+}
+
+function next() {
+	if (Date.now() - bubble.time > 300) {
+		clear()
+		bubble.next()
+	}
 }
 
 function clear() {
+	clearTimeout(bubble.tid)
 	bubble.style.display = "none"
 }
 
@@ -119,6 +160,10 @@ function show(list) {
 }
 
 function go(name) {
+	if (name == "Underwater" && !state.inventory.includes("Googles")) {
+		say(props.Dave, "First I need diving googles.")
+		return
+	}
 	state.scene = scenes[name]
 	state.scene.setup()
 }
@@ -166,6 +211,7 @@ window.onload = function() {
 	].forEach(id => document.getElementById(id).onclick = function() {
 		go(id.replace(/^[A-Z][a-z]*/, ""))
 	})
+	document.onclick = next
 	window.onresize = resize
 	resize()
 }
