@@ -3,25 +3,26 @@
 const scenes = {
 		Stern: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, 230, 24)
-				props.Dave.style.transform = centerScale(1)
-				props.Sheryl.style.transform = centerScale(1, -50)
-				props.Googles.style.transform = centerScale(.3, -49, -31)
-				show([props.Boat, props.Stern, props.Dave, props.Sheryl,
-					props.Watch, props.Googles])
+				props.Boat.style.transform = centerScale(230, 24)
+				props.Dave.style.transform = centerScale()
+				props.Sheryl.style.transform = centerScale(-50)
+				props.Googles.style.transform = centerScale(-49, -31, .3)
+				show([props.Boat, props.Stern,
+					props.Dave,
+					props.Sheryl, props.Watch, props.Googles])
 				say(props.Dave, "Hello! Hello!")
 			}
 		},
 		Inside: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, -12, -5)
-				props.Sheryl.style.transform = centerScale(1, -110)
-				props.Googles.style.transform = centerScale(.3, -125, 55) +
+				props.Boat.style.transform = centerScale(-12, -5)
+				props.Sheryl.style.transform = centerScale(-110)
+				props.Googles.style.transform = centerScale(-125, 55, .3) +
 					"rotateZ(-80deg)"
-				props.Dave.style.transform = centerScale(1, -75, 10)
-				props.Skipper.style.transform = centerScale(1, -18, 20)
-				props.Amanda.style.transform = centerScale(1, 45)
-				props.Bruce.style.transform = centerScale(1, 85, 5)
+				props.Dave.style.transform = centerScale(-75, 10)
+				props.Skipper.style.transform = centerScale(-18, 20)
+				props.Amanda.style.transform = centerScale(45)
+				props.Bruce.style.transform = centerScale(85, 5)
 				show([props.Boat, props.Inside,
 					props.Dave,
 					props.Sheryl, props.Watch, props.Googles,
@@ -32,38 +33,42 @@ const scenes = {
 		},
 		Bow: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, -230, 64)
-				props.Dave.style.transform = centerScale(1, -30, -2)
-				show([props.Boat, props.Bow, props.Dave])
+				props.Boat.style.transform = centerScale(-230, 64)
+				props.Dave.style.transform = centerScale(-30, -2)
+				show([props.Boat, props.Bow,
+					props.Dave])
 				say(props.Dave, "I'm the king of the world!")
 			}
 		},
 		Steer: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, 20, 124)
-				props.Dave.style.transform = centerScale(1)
-				props.Sheryl.style.transform = centerScale(1, -75)
-				props.Googles.style.transform = centerScale(.3, -90, 55) +
+				props.Boat.style.transform = centerScale(20, 124)
+				props.Dave.style.transform = centerScale()
+				props.Sheryl.style.transform = centerScale(-75)
+				props.Googles.style.transform = centerScale(-90, 55, .3) +
 					"rotateZ(-80deg)"
-				show([props.Boat, props.Steer, props.Dave,
+				show([props.Boat, props.Steer,
+					props.Dave,
 					props.Sheryl, props.Watch, props.Googles])
 				say(props.Dave, "Who's your captain?")
 			}
 		},
 		Storage: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, -200, -20)
+				props.Boat.style.transform = centerScale(-200, -20)
 				show([props.Boat, props.Storage])
 			}
 		},
 		Underwater: {
 			setup: function() {
-				props.Boat.style.transform = centerScale(1, 250, -250)
-				props.Dave.style.transform = centerScale(1)
-				props.Shark.style.transform = centerScale(1, 100, -50)
-				props.Key.style.transform = centerScale(.5, -40, 130)
+				props.Boat.style.transform = centerScale(250, -250)
+				props.Dave.style.transform = centerScale()
+				props.Shark.style.transform = centerScale(100, -50)
+				props.Key.style.transform = centerScale(-40, 130, .5)
 				show([props.Boat, props.Underwater,
-					props.Dave, props.Shark, props.Key])
+					props.Dave,
+					props.Shark,
+					props.Key])
 				say(props.Dave, "Under the sea…")
 			}
 		},
@@ -118,7 +123,8 @@ function go(name) {
 	state.scene.setup()
 }
 
-function centerScale(ratio, x, y) {
+function centerScale(x, y, ratio) {
+	ratio = ratio || 1
 	const f = 50 * ratio
 	return `translate(${
 		centerX - f + (x || 0)}px, ${
