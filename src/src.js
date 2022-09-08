@@ -227,14 +227,6 @@ function set(e, x, y, size, deg) {
 		deg || 0}deg) scale(${size || 1})`
 }
 
-function centerScale(x, y, ratio) {
-	ratio = ratio || 1
-	const f = 50 * ratio
-	return `translate(${
-		centerX - f + (x || 0)}px, ${
-		centerY - f + (y || 0)}px) scale(${ratio})`
-}
-
 function resize() {
 	const windowWidth = window.innerWidth,
 		windowHeight = window.innerHeight,
