@@ -12,7 +12,21 @@ const scenes = {
 					props.Dave,
 					props.Sheryl, props.Watch, props.Googles
 				])
-				say(props.Dave, "Hello! Hello!")
+				props.Googles.onclick = function() {
+					sayLater(props.Dave, "Diving googles!")
+				}
+				props.Watch.onclick = function() {
+					sayLater(props.Dave, "That's a sharp looking diving watch!")
+				}
+				props.Sheryl.onclick = function() {
+					sayLater([props.Dave, "Hi, Sheryl, you swimming?",
+						props.Sheryl, "None of your business, Dave.",
+					])
+				}
+				if (!state.greet) {
+					state.greet = 1
+					say(props.Dave, "Hello! Hello!")
+				}
 			}
 		},
 		Inside: {
@@ -25,24 +39,51 @@ const scenes = {
 				props.Skipper.style.transform = centerScale(-18, 20)
 				props.Amanda.style.transform = centerScale(45)
 				props.Bruce.style.transform = centerScale(85, 5)
-				props.Skipper.onclick = function() {
-					say(props.Dave, "He looks unharmed. Apart from that little scratch on his arm.")
-				}
 				show([props.Boat, props.Inside,
 					props.Dave,
 					props.Sheryl, props.Watch, props.Googles,
 					props.Amanda, props.Bruce,
 					props.Skipper
 				])
-				say([props.Dave, "What happened?",
-					props.Amanda, "Oh my god, he just collapsed!",
-					props.Bruce, "Maybe it's the salmon mousse?",
-					props.Amanda, "Don't be ridiculous! We all ate the salmon mousse!",
-					props.Bruce, "Maybe he was allergic?",
-					props.Amanda, "But he served it to us!",
-					props.Sheryl, "Maybe it was a heart attack then?",
-					props.Dave, "I don't know. I'm not a doctor. Let's see…",
-				])
+				props.Sheryl.onclick = function() {
+					sayLater([props.Dave, "What do you think, Sheryl?",
+						props.Sheryl, "I think it was a heart attack, Dave.",
+					])
+				}
+				props.Amanda.onclick = function() {
+					sayLater([props.Dave, "What do you think, Amanda?",
+						props.Amanda, "It may have something to do with the Triangle…",
+						props.Dave, "What Triangle?",
+						props.Amanda, "We're in the middle of the Bermuda Triangle!",
+						props.Dave, "And?",
+						props.Amanda, "There are mysterious forces…",
+					])
+				}
+				props.Bruce.onclick = function() {
+					sayLater([props.Dave, "Did you see anything, Bruce?",
+						props.Bruce, "I saw how he was looking at my wife.",
+						props.Dave, "Yeah, and this is why you killed him?",
+						props.Bruce, "I didn't kill the slacker. Must have been ill or something.",
+						props.Amanda, "Bermuda!",
+					])
+				}
+				props.Skipper.onclick = function() {
+					sayLater([props.Dave, "He looks unharmed. Apart from that little scratch on his arm.",
+						props.Bruce, "Death by scratch",
+					])
+				}
+				if (!state.discover) {
+					state.discover = 1
+					say([props.Dave, "What happened?",
+						props.Amanda, "Oh my god, he just collapsed!",
+						props.Bruce, "Maybe it's the salmon mousse?",
+						props.Amanda, "Don't be ridiculous! We all ate the salmon mousse!",
+						props.Bruce, "Maybe he was allergic?",
+						props.Amanda, "But he served it to us!",
+						props.Sheryl, "Maybe it was a heart attack then?",
+						props.Dave, "I don't know. I'm not a doctor. Let's see…",
+					])
+				}
 			}
 		},
 		Bow: {
@@ -52,7 +93,10 @@ const scenes = {
 				show([props.Boat, props.Bow,
 					props.Dave
 				])
-				say(props.Dave, "I'm the king of the world!")
+				if (!state.bow) {
+					state.bow = 1
+					say(props.Dave, "I'm the king of the world!")
+				}
 			}
 		},
 		Steer: {
@@ -66,7 +110,7 @@ const scenes = {
 					props.Dave,
 					props.Sheryl, props.Watch, props.Googles
 				])
-				say([props.Dave, "Who's your captain?",
+				say([props.Dave, "Now who's your captain?",
 					props.Sheryl, "Not you."
 				])
 			}
@@ -106,6 +150,23 @@ let centerX,
 	centerY,
 	bubble
 
+function clear() {
+	clearTimeout(bubble.tid)
+	bubble.time = Date.now()
+	bubble.style.display = "none"
+}
+
+function skip() {
+	if (Date.now() - bubble.time > 300) {
+		clear()
+		bubble.next()
+	}
+}
+
+function sayLater(who, what) {
+	bubble.talking || say(who, what)
+}
+
 function say(who, what) {
 	const a = Array.isArray(who) ? who : [who, what]
 	who = a.shift()
@@ -132,36 +193,35 @@ function say(who, what) {
 		bubbleRect.height - margin * 1.5) + "px"
 	bubble.p.style.left = (cx - x) + "px"
 	bubble.time = Date.now()
+	bubble.talking = 1
 	bubble.next = function() {
-		a.length > 0 ? say(a) : clear()
+		if (a.length > 0) {
+			say(a)
+		} else {
+			clear()
+			bubble.talking = 0
+		}
 	}
 	bubble.tid = setTimeout(bubble.next,
 		1000 + 200 * what.split(' ').length)
 }
 
-function next() {
-	if (Date.now() - bubble.time > 300) {
-		clear()
-		bubble.next()
-	}
-}
-
-function clear() {
-	clearTimeout(bubble.tid)
-	bubble.style.display = "none"
-}
-
 function show(list) {
 	clear()
 	for (let key in props) {
-		props[key].style.visibility = "hidden"
+		const prop = props[key]
+		prop.style.visibility = "hidden"
+		prop.onclick = null
 	}
 	list.forEach((o) => o.style.visibility = "visible")
 }
 
 function go(name) {
+	clear()
+	bubble.next = function() {}
+	bubble.talking = 0
 	if (name == "Underwater" && !state.inventory.includes("Googles")) {
-		say(props.Dave, "First I need diving googles.")
+		sayLater(props.Dave, "First I need diving googles.")
 		return
 	}
 	state.scene = scenes[name]
@@ -211,7 +271,7 @@ window.onload = function() {
 	].forEach(id => document.getElementById(id).onclick = function() {
 		go(id.replace(/^[A-Z][a-z]*/, ""))
 	})
-	document.onclick = next
+	document.onclick = skip
 	window.onresize = resize
 	resize()
 }
