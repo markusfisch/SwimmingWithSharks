@@ -5,7 +5,7 @@ const scenes = {
 			set(Boat, 230, 24)
 			set(Dave)
 			set(Sheryl, -50)
-			set(Googles, -62, 26, .3, -80)
+			set(Googles, -62, 27, .4, -90)
 			show([Boat, Stern,
 				Dave,
 				Sheryl, Watch, Googles
@@ -28,7 +28,7 @@ const scenes = {
 		Cabin: function() {
 			set(Boat, -12, -5)
 			set(Sheryl, -110)
-			set(Googles, -122, 26, .3, -80)
+			set(Googles, -122, 27, .4, -90)
 			set(Dave, -75, 10)
 			set(Skipper, -18, 20)
 			set(Amanda, 45)
@@ -101,7 +101,7 @@ const scenes = {
 			set(Boat, 20, 124)
 			set(Dave)
 			set(Sheryl, -75)
-			set(Googles, -87, 26, .3, -80)
+			set(Googles, -87, 27, .4, -90)
 			show([Boat, Bridge,
 				Dave,
 				Sheryl, Watch, Googles
