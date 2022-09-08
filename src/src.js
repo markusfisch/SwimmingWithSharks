@@ -32,7 +32,7 @@ const scenes = {
 			set(Dave, -75, 10)
 			set(Skipper, -18, 20)
 			set(Amanda, 45)
-			set(Book, 35, 28, 1, -32)
+			set(Book, 35, 26, 1, -20)
 			set(Bruce, 85, 5)
 			show([Boat, Cabin,
 				Dave,
@@ -56,8 +56,11 @@ const scenes = {
 				])
 			})
 			hot(Book, function() {
-				sayLater([Dave, "What's this book?",
+				sayLater([Dave, "What's that book?",
 					Amanda, "It's about the Bermuda Triangle!",
+					Amanda, "We are in the Bermuda Triangle. Right now!",
+					Dave, "And why's that important?",
+					Amanda, "Because Aliens?! There may also be a gate to another dimension! Nobody knows what's going on here…",
 				])
 			})
 			hot(Bruce, function() {
