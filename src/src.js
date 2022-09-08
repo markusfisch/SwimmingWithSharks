@@ -10,20 +10,20 @@ const scenes = {
 				Dave,
 				Sheryl, Watch, Googles
 			])
-			Dave.onclick = function() {
+			hot(Dave, function() {
 				sayLater(Dave, "That's me!")
-			}
-			Sheryl.onclick = function() {
+			})
+			hot(Sheryl, function() {
 				sayLater([Dave, "Hi, Sheryl, you swimming?",
 					Sheryl, "None of your business, Dave.",
 				])
-			}
-			Watch.onclick = function() {
+			})
+			hot(Watch, function() {
 				sayLater(Dave, "That's a sharp looking diving watch!")
-			}
-			Googles.onclick = function() {
+			})
+			hot(Googles, function() {
 				sayLater(Dave, "Diving googles!")
-			}
+			})
 		},
 		Cabin: function() {
 			set(Boat, -12, -5)
@@ -41,12 +41,12 @@ const scenes = {
 				Bruce,
 				Skipper
 			])
-			Sheryl.onclick = function() {
+			hot(Sheryl, function() {
 				sayLater([Dave, "What do you think, Sheryl?",
 					Sheryl, "I think it was a heart attack, Dave.",
 				])
-			}
-			Amanda.onclick = function() {
+			})
+			hot(Amanda, function() {
 				sayLater([Dave, "What do you think, Amanda?",
 					Amanda, "It may have something to do with the Triangle…",
 					Dave, "What Triangle?",
@@ -54,25 +54,25 @@ const scenes = {
 					Dave, "And?",
 					Amanda, "There are mysterious forces…",
 				])
-			}
-			Book.onclick = function() {
+			})
+			hot(Book, function() {
 				sayLater([Dave, "What's this book?",
 					Amanda, "It's about the Bermuda Triangle!",
 				])
-			}
-			Bruce.onclick = function() {
+			})
+			hot(Bruce, function() {
 				sayLater([Dave, "Did you see anything, Bruce?",
 					Bruce, "I saw how he was looking at my wife.",
 					Dave, "Yeah, and this is why you killed him?",
 					Bruce, "I didn't kill the slacker. Must have been ill or something.",
 					Amanda, "Bermuda!",
 				])
-			}
-			Skipper.onclick = function() {
+			})
+			hot(Skipper, function() {
 				sayLater([Dave, "He looks unharmed. Apart from that little scratch on his arm.",
 					Bruce, "Death by scratch",
 				])
-			}
+			})
 			if (!state.discover) {
 				state.discover = 1
 				say([Dave, "What happened?",
@@ -138,6 +138,10 @@ const scenes = {
 
 let centerX,
 	centerY
+
+function hot(e, f) {
+	e.onclick = f
+}
 
 function clear() {
 	clearTimeout(B.tid)
