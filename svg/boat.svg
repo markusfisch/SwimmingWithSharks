@@ -28,49 +28,49 @@
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternUnderwater"/>
 </g>
 <g transform="matrix(0.5, -0.866, 0.866, 0.5, -195, 50)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternInside"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternCabin"/>
 </g>
 <g transform="matrix(-0.5, -0.866, 0.866, -0.5, -100, 25)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternSteer"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternBridge"/>
 </g>
 <g transform="matrix(0, -1, 1, 0, -160, 40)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternBow"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternDeck"/>
 </g>
 </g>
-<g id="Steer">
+<g id="Bridge">
 <path style="fill: rgb(183, 148, 88);" d="M -65 -29 C -65 -29 -69 -22 -69 -22 L 45 -22 L 47 -29 L -65 -29 Z"/>
 <path style="stroke-width: 2px; stroke-linejoin: round; fill: none; stroke-linecap: round; stroke: rgb(0, 0, 0);" d="M -69 -22 L 45 -22 L 54 -62"/>
 <g transform="matrix(0.707, 0.707, -0.707, 0.707, -95, -110)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SteerStern"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="BridgeStern"/>
 </g>
 </g>
 <path style="fill: rgb(255, 255, 255);" d="M -26 -71 L -19 -26 L 10 -26 L 7 -45 L -11 -40 C -11 -40 -19 -79 -19 -79 L -26 -71 Z"/>
-<g id="Bow">
+<g id="Deck">
 <path style="fill: rgb(183, 148, 88);" d="M 234 29 L 226 39 L 328 35 L 334 29"/>
 <path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none; stroke: rgb(0, 0, 0);" d="M 234 29 L 226 39 L 328 35 L 334 29"/>
 <g transform="matrix(0, 1, -1, 0, 210, -80)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="BowStern"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="DeckStern"/>
 </g>
 </g>
-<g id="Inside">
+<g id="Cabin">
 <path style="fill: rgb(217, 176, 105);" d="M -53 -15 L -93 81 L -28 132 L 152 128 L 222 33 L 106 -17 L -53 -15 Z"/>
 <path style="fill: rgb(183, 148, 88);" d="M -36 97 L -93 81 L -28 132 L 152 128 L 222 33 L 163 92 L -36 97 Z"/>
 <path style="fill: rgb(183, 148, 88);" d="M 104 -13 L 189 25 L 64 30 L 59 -12 L 104 -13 Z"/>
 <path style="fill: rgb(183, 148, 88);" d="M -48 -11 L -68 35 L 56 31 L 51 -12 L -48 -11 Z"/>
 <path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none; stroke: rgb(0, 0, 0);" d="M -53 -15 L -93 81 L -28 132 L 152 128 L 222 33 L 106 -17 L -53 -15 Z"/>
 <g transform="matrix(0, 1, -1, 0, 11, -42)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="InsideStern"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="CabinStern"/>
 </g>
 <g transform="matrix(0, -1, 1, 0, 137, 92)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="InsideStorage"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="CabinStore"/>
 </g>
 </g>
-<g id="Storage">
+<g id="Store">
 <path style="fill: rgb(217, 176, 105);" d="M 325 41 C 287 82 259 103 200 126 L 159 128 L 221 46 L 325 41 Z"/>
 <path style="fill: rgb(183, 148, 88);" d="M 185 94 L 246 105 C 246 105 218 119 200 126 L 159 128 L 185 94 Z"/>
 <path style="stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; fill: none; stroke: rgb(0, 0, 0);" d="M 325 41 C 287 82 259 103 200 126 L 159 128 L 221 46 L 325 41 Z"/>
 <g transform="matrix(0, 1, -1, 0, 330, 10)">
-<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="StorageInside"/>
+<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="StoreCabin"/>
 </g>
 </g>
 <g transform="matrix(1, 0, 0, -1, -360, 230)" id="Underwater">
