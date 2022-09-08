@@ -265,6 +265,7 @@ window.onload = function() {
 		go(id.replace(/^[A-Z][a-z]*/, ""))
 	})
 	document.onclick = skip
+	document.onkeyup = skip
 	window.onresize = resize
 	resize()
 }
