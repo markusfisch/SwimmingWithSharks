@@ -5,7 +5,8 @@ const scenes = {
 			set(Boat, 230, 24)
 			set(Dave)
 			set(Sheryl, -50)
-			set(Googles, -62, 27, .4, -90)
+			set(Googles, -61, 28, .4, -100)
+			set(Watch, -39, 14, .17, 10)
 			show([Boat, Stern,
 				Dave,
 				Sheryl, Watch, Googles
@@ -29,11 +30,12 @@ const scenes = {
 			set(Boat, -12, -5)
 			set(Sheryl, -110)
 			set(Googles, -122, 27, .4, -90)
+			set(Watch, -99, 14, .17, 10)
 			set(Dave, -75, 10)
 			set(Skipper, -18, 20)
-			set(Amanda, 45)
-			set(Book, 35, 26, 1, -20)
-			set(Bruce, 85, 5)
+			set(Amanda, 45, -5)
+			set(Book, 35, 21, 1, -20)
+			set(Bruce, 84)
 			show([Boat, Cabin,
 				Dave,
 				Sheryl, Watch, Googles,
@@ -45,6 +47,12 @@ const scenes = {
 				sayLater([Dave, "What do you think, Sheryl?",
 					Sheryl, "I think it was a heart attack, Dave.",
 				])
+			})
+			hot(Watch, function() {
+				sayLater(Dave, "That's a sharp looking diving watch!")
+			})
+			hot(Googles, function() {
+				sayLater(Dave, "Diving googles!")
 			})
 			hot(Amanda, function() {
 				sayLater([Dave, "What do you think, Amanda?",
@@ -58,7 +66,7 @@ const scenes = {
 			hot(Book, function() {
 				sayLater([Dave, "What's that book?",
 					Amanda, "It's about the Bermuda Triangle!",
-					Amanda, "We are in the Bermuda Triangle. Right now!",
+					Amanda, "We are in the Bermuda Triangle - right now!",
 					Dave, "And why's that important?",
 					Amanda, "Because Aliens?! There may also be a gate to another dimension! Nobody knows what's going on here…",
 				])
@@ -79,7 +87,7 @@ const scenes = {
 			if (!state.discover) {
 				state.discover = 1
 				say([Dave, "What happened?",
-					Amanda, "Oh my god, he just collapsed!",
+					Amanda, "He just collapsed!!",
 					Bruce, "Maybe it's the salmon mousse?",
 					Amanda, "Don't be ridiculous! We all ate the salmon mousse!",
 					Bruce, "Maybe he was allergic?",
@@ -105,13 +113,20 @@ const scenes = {
 			set(Dave)
 			set(Sheryl, -75)
 			set(Googles, -87, 27, .4, -90)
+			set(Watch, -64, 14, .17, 10)
 			show([Boat, Bridge,
 				Dave,
 				Sheryl, Watch, Googles
 			])
 			say([Dave, "Now who's your captain?",
-				Sheryl, "Not you."
+				Sheryl, "Not you.",
 			])
+			hot(Watch, function() {
+				sayLater(Dave, "That's a sharp looking diving watch!")
+			})
+			hot(Googles, function() {
+				sayLater(Dave, "Diving googles!")
+			})
 		},
 		Store: function() {
 			set(Boat, -200, -20)
@@ -119,19 +134,20 @@ const scenes = {
 			show([Boat, Store,
 				DaveLeaning
 			])
-			say(DaveLeaning, "Hm, what's in here?")
+			say(DaveLeaning, "What's in here?")
 		},
 		Underwater: function() {
 			set(Boat, 250, -250)
-			set(Dave)
-			set(Shark, 100, -50)
-			set(Key, -40, 130, .5)
+			set(DaveDiving, -70, -40)
+			set(Googles, -70, -52, .4)
+			set(Shark, 50, 30, 2)
+			set(Key, 100, 132, .6, 30)
 			show([Boat, Underwater,
-				Dave,
+				DaveDiving, Googles,
 				Shark,
 				Key
 			])
-			say(Dave, "Under the sea…")
+			say(DaveDiving, "Whoa!!!!!!")
 		},
 	},
 	state = {
@@ -196,6 +212,7 @@ function say(who, what) {
 		} else {
 			clear()
 			B.talking = 0
+			B.next = null
 		}
 	}
 	B.tid = setTimeout(B.next,
@@ -215,13 +232,13 @@ function show(list) {
 }
 
 function go(name) {
-	clear()
-	B.next = function() {}
-	B.talking = 0
-	if (name == "Underwater" && !state.inventory.includes("Googles")) {
+	if (B.talking) {
+		return
+	} else if (name == "Underwater" && !state.inventory.includes("Googles")) {
 		sayLater(Dave, "I need diving googles to see anything.")
 		return
 	}
+	clear()
 	state.scene = scenes[name]
 	state.scene()
 }
