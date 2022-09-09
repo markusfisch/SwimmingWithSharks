@@ -249,6 +249,18 @@ window.onload = function() {
 	})
 	document.onclick = skip
 	document.onkeyup = skip
+	// Prevent pinch/zoom on iOS 11.
+	if ('ontouchstart' in document) {
+		document.addEventListener('gesturestart', function(event) {
+			event.preventDefault()
+		}, false)
+		document.addEventListener('gesturechange', function(event) {
+			event.preventDefault()
+		}, false)
+		document.addEventListener('gestureend', function(event) {
+			event.preventDefault()
+		}, false)
+	}
 	window.onresize = resize
 	resize()
 }
