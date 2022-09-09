@@ -5,11 +5,11 @@ const scenes = {
 			set(Boat, 230, 24)
 			set(Dave)
 			set(Sheryl, -50)
-			set(Googles, -61, 28, .4, -100)
+			set(Goggles, -61, 28, .4, -100)
 			set(Watch, -39, 14, .17, 10)
 			show([Boat, Stern,
 				Dave,
-				Sheryl, Watch, Googles
+				Sheryl, Watch, Goggles
 			])
 			hot(Dave, function() {
 				say([Dave, "That's me!"])
@@ -22,14 +22,14 @@ const scenes = {
 			hot(Watch, function() {
 				say([Dave, "That's a sharp looking diving watch!"])
 			})
-			hot(Googles, function() {
-				say([Dave, "Diving googles!"])
+			hot(Goggles, function() {
+				say([Dave, "Diving goggles!"])
 			})
 		},
 		Cabin: function() {
 			set(Boat, -12, -5)
 			set(Sheryl, -110)
-			set(Googles, -122, 27, .4, -90)
+			set(Goggles, -121, 28, .4, -100)
 			set(Watch, -99, 14, .17, 10)
 			set(Dave, -75, 10)
 			set(Skipper, -18, 20)
@@ -38,7 +38,7 @@ const scenes = {
 			set(Bruce, 84)
 			show([Boat, Cabin,
 				Dave,
-				Sheryl, Watch, Googles,
+				Sheryl, Watch, Goggles,
 				Amanda, Book,
 				Bruce,
 				Skipper
@@ -51,8 +51,8 @@ const scenes = {
 			hot(Watch, function() {
 				say([Dave, "That's a sharp looking diving watch!"])
 			})
-			hot(Googles, function() {
-				say([Dave, "Diving googles!"])
+			hot(Goggles, function() {
+				say([Dave, "Diving goggles!"])
 			})
 			hot(Amanda, function() {
 				say([Dave, "What do you think, Amanda?",
@@ -112,11 +112,11 @@ const scenes = {
 			set(Boat, 20, 124)
 			set(Dave)
 			set(Sheryl, -75)
-			set(Googles, -87, 27, .4, -90)
+			set(Goggles, -86, 28, .4, -100)
 			set(Watch, -64, 14, .17, 10)
 			show([Boat, Bridge,
 				Dave,
-				Sheryl, Watch, Googles
+				Sheryl, Watch, Goggles
 			])
 			say([Dave, "Now who's your captain?",
 				Sheryl, "Not you.",
@@ -124,8 +124,8 @@ const scenes = {
 			hot(Watch, function() {
 				say([Dave, "That's a sharp looking diving watch!"])
 			})
-			hot(Googles, function() {
-				say([Dave, "Diving googles!"])
+			hot(Goggles, function() {
+				say([Dave, "Diving goggles!"])
 			})
 		},
 		Store: function() {
@@ -139,11 +139,11 @@ const scenes = {
 		Underwater: function() {
 			set(Boat, 250, -250)
 			set(DaveDiving, -70, -40)
-			set(Googles, -70, -52, .4)
+			set(Goggles, -70, -52, .4)
 			set(Shark, 50, 30, 2)
 			set(Key, 100, 132, .6, 30)
 			show([Boat, Underwater,
-				DaveDiving, Googles,
+				DaveDiving, Goggles,
 				Shark,
 				Key
 			])
@@ -232,8 +232,8 @@ function show(list) {
 function go(name) {
 	if (B.talking) {
 		return
-	} else if (name == "Underwater" && !state.inventory.includes("Googles")) {
-		say([Dave, "I need diving googles to see anything."])
+	} else if (name == "Underwater" && !state.inventory.includes("Goggles")) {
+		say([Dave, "I need diving goggles to see anything."])
 		return
 	}
 	clear()
