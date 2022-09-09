@@ -6,17 +6,46 @@ const scenes = {
 			set(Dave, function() {
 				say([Dave, "That's me!"])
 			})
-			set(Sheryl, function() {
-				say([Dave, "Hi, Sheryl, you swimming?",
-					Sheryl, "None of your business, Dave.",
+			/*if (!state.scream) {
+				state.scream = 1
+				say([SternCabin, "AAAAAAHHHHH!!",
+					Dave, "What was that?",
 				])
-			}, -50)
-			set(Goggles, function() {
-				say([Dave, "Diving goggles!"])
-			}, -61, 28, .4, -100)
-			set(Watch, function() {
-				say([Dave, "That's a sharp looking diving watch!"])
-			}, -39, 14, .17, 10)
+			} else {*/
+				const talkToSheryl = function() {
+					if (state.goggles && !state.inventory.includes(Goggles)) {
+						say([Dave, "Can I have your diving goggles, Sheryl?",
+							Sheryl, "Sure, here…",
+							Dave, "Ouch!",
+							Sheryl, "Oh, sorry, I scratched you, that damn watch!",
+						], function() {
+							Dave.hasGoggles = 1
+							state.inventory.push(Goggles)
+							Goggles.style.visibility = "hidden"
+							say([Dave, "I'm feeling dizzy…"])
+							flashTo("Death", fadeOut)
+						})
+					} else {
+						say([Dave, "Hi, Sheryl, you swimming?",
+							Sheryl, "None of your business, Dave.",
+						])
+					}
+				}
+				set(Sheryl, talkToSheryl, -50)
+				set(Watch, function() {
+					say([Dave, "That's a sharp looking diving watch!"])
+				}, -39, 14, .17, 10)
+				if (!Dave.hasGoggles) {
+					set(Goggles, function() {
+						if (!state.goggles) {
+							state.goggles = 1
+							say([Dave, "Diving goggles!"])
+						} else if (!state.inventory.includes(Goggles)) {
+							talkToSheryl()
+						}
+					}, -61, 28, .4, -100)
+				}
+			//}
 		},
 		Cabin: function() {
 			set(Boat, null, -12, -5)
@@ -113,15 +142,36 @@ const scenes = {
 			set(Key, null, 100, 132, .6, 30)
 			say([DaveDiving, "Whoa!!!!!!"])
 		},
+		Death: function() {
+			FX.innerHTML = 'You are dead.<br/>Press <a href="#" onclick="location.reload()">here</a> to try again.'
+			FX.style.display = 'block'
+		},
 	},
+	fadeOut = ['#0002', '#0004', '#0008', '#000a', '#000'],
 	visibles = [],
 	state = {
 		inventory: [],
-		scene: scenes.Stern
 	}
 
 let centerX,
 	centerY
+
+function flashTo(name, colors, index) {
+	index = index || 0
+	FX.style.background = colors[index]
+	FX.style.display = 'block'
+	FX.flashing = 1
+	setTimeout(function() {
+		++index
+		if (index >= colors.length) {
+			FX.style.display = 'none'
+			FX.flashing = 0
+			show(name)
+		} else {
+			flashTo(name, colors, index)
+		}
+	}, 100)
+}
 
 function clear() {
 	clearTimeout(B.tid)
@@ -187,7 +237,8 @@ function show(name) {
 		}
 	}
 	visibles.length = 0
-	visibles.push(window[name])
+	const bg = window[name]
+	bg && visibles.push(bg)
 	state.scene = scenes[name]
 	state.scene()
 	visibles.forEach((o) => o.style.visibility = "visible")
@@ -196,7 +247,7 @@ function show(name) {
 function go(name) {
 	if (B.talking) {
 		return
-	} else if (name == "Underwater" && !state.inventory.includes("Goggles")) {
+	} else if (name == "Underwater" && !state.inventory.includes(Goggles)) {
 		say([Dave, "I need diving goggles to see anything."])
 		return
 	}
@@ -210,7 +261,9 @@ function set(e, f, x, y, size, deg) {
 		centerX - 50 + (x || 0)}px, ${
 		centerY - 50 + (y || 0)}px) rotateZ(${
 		deg || 0}deg) scale(${size || 1})`
-	e.onclick = f
+	e.onclick = f ? function() {
+		B.talking || f()
+	} : null
 	visibles.push(e)
 }
 
