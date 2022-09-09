@@ -175,13 +175,13 @@ function skip() {
 	}
 }
 
-function say(a, cont) {
+function say(a, f, cont) {
 	if (!cont && B.talking) {
 		return
 	}
+	clear()
 	const who = a.shift(),
 		what = a.shift()
-	clear()
 	// Set this for getBoundingClientRect() to work as expected.
 	B.style.left = "0px"
 	B.style.top = "0px"
@@ -206,15 +206,15 @@ function say(a, cont) {
 	B.talking = 1
 	B.next = function() {
 		if (a.length > 0) {
-			say(a, 1)
+			say(a, f, 1)
 		} else {
 			clear()
 			B.talking = 0
 			B.next = null
+			f && f()
 		}
 	}
-	B.tid = setTimeout(B.next,
-		1000 + 200 * what.split(' ').length)
+	B.tid = setTimeout(B.next, 1000 + 200 * what.split(' ').length)
 }
 
 function show(list) {
