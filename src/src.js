@@ -6,46 +6,47 @@ const scenes = {
 			set(Dave, function() {
 				say([Dave, "That's me!"])
 			})
-			/*if (!state.scream) {
-				state.scream = 1
-				say([SternCabin, "AAAAAAHHHHH!!",
-					Dave, "What was that?",
-				])
-			} else {*/
-				const talkToSheryl = function() {
-					if (state.goggles && !state.inventory.includes(Goggles)) {
-						say([Dave, "Can I have your diving goggles, Sheryl?",
-							Sheryl, "Sure, here…",
-							Dave, "Ouch!",
-							Sheryl, "Oh, sorry, I scratched you, that damn watch!",
-						], function() {
-							Dave.hasGoggles = 1
-							state.inventory.push(Goggles)
-							Goggles.style.visibility = "hidden"
-							say([Dave, "I'm feeling dizzy…"])
-							flashTo("Death", fadeOut)
-						})
-					} else {
-						say([Dave, "Hi, Sheryl, you swimming?",
-							Sheryl, "None of your business, Dave.",
-						])
-					}
-				}
-				set(Sheryl, talkToSheryl, -50)
-				set(Watch, function() {
-					say([Dave, "That's a sharp looking diving watch!"])
-				}, -39, 14, .17, 10)
-				if (!Dave.hasGoggles) {
-					set(Goggles, function() {
-						if (!state.goggles) {
-							state.goggles = 1
-							say([Dave, "Diving goggles!"])
-						} else if (!state.inventory.includes(Goggles)) {
-							talkToSheryl()
+			set(Sheryl, function() {
+				say([Dave, [
+					{
+						text: () => state.swimming
+							? null
+							: "Hi, Sheryl, you swimming?",
+						action: function() {
+							state.swimming = 1
+							say([Sheryl, "None of your business, Dave."])
 						}
-					}, -61, 28, .4, -100)
-				}
-			//}
+					},
+					{
+						text: () => "Can I have your diving goggles?",
+						action: function() {
+							addInventory(Goggles)
+							say([Sheryl, "Sure, here…",
+								Dave, "Ouch!",
+								Sheryl, "Oh sorry, I scratched you with my watch.",
+								Dave, "I'm feeling dizzy…",
+							], function() {
+								FX.style.background = "#000"
+								FX.style.display = "block"
+								FX.innerHTML = "You die."
+								FX.onclick = function() {
+									location.reload()
+								}
+							})
+						}
+					},
+					{
+						text: () => "Nevermind.",
+						action: clear
+					},
+				]])
+			}, -50)
+			set(Watch, function() {
+				say([Dave, "That's a sharp looking diving watch!"])
+			}, -39, 14, .17, 10)
+			set(Goggles, function() {
+				say([Dave, "Diving goggles!"])
+			}, -61, 28, .4, -100)
 		},
 		Cabin: function() {
 			set(Boat, null, -12, -5)
@@ -54,11 +55,11 @@ const scenes = {
 					Sheryl, "I think it was a heart attack, Dave.",
 				])
 			}, -110)
-			set(Goggles, function() {
-				say([Dave, "Diving goggles!"])
-			}, -121, 28, .4, -100)
+			set(Goggles, null, -121, 28, .4, -100)
 			set(Watch, function() {
-				say([Dave, "That's a sharp looking diving watch!"])
+				say([Dave, "That's a sharp looking diving watch!",
+					Sheryl, "Thank you."
+				])
 			}, -99, 14, .17, 10)
 			set(Dave, null, -75, 10)
 			set(Skipper, function() {
@@ -92,7 +93,19 @@ const scenes = {
 				])
 			}, 84)
 			set(Mousse, function() {
-				say([Dave, "The salmon mousse"])
+				say([Mousse, [
+					{
+						text: () => "Take the salmon mousse.",
+						action: function() {
+							addInventory(Mousse)
+							clear()
+						}
+					},
+					{
+						text: () => "Leave it.",
+						action: clear
+					}
+				]])
 			}, -10, -30)
 			if (!state.discover) {
 				state.discover = 1
@@ -142,35 +155,21 @@ const scenes = {
 			set(Key, null, 100, 132, .6, 30)
 			say([DaveDiving, "Whoa!!!!!!"])
 		},
-		Death: function() {
-			FX.innerHTML = 'You are dead.<br/>Press <a href="#" onclick="location.reload()">here</a> to try again.'
-			FX.style.display = 'block'
-		},
 	},
-	fadeOut = ['#0002', '#0004', '#0008', '#000a', '#000'],
 	visibles = [],
 	state = {
 		inventory: [],
+		scene: "Stern"
 	}
 
 let centerX,
 	centerY
 
-function flashTo(name, colors, index) {
-	index = index || 0
-	FX.style.background = colors[index]
-	FX.style.display = 'block'
-	FX.flashing = 1
-	setTimeout(function() {
-		++index
-		if (index >= colors.length) {
-			FX.style.display = 'none'
-			FX.flashing = 0
-			show(name)
-		} else {
-			flashTo(name, colors, index)
-		}
-	}, 100)
+function addInventory(item) {
+	if (!state.inventory.includes(item)) {
+		item.style.visibility = "hidden"
+		state.inventory.push(item)
+	}
 }
 
 function clear() {
@@ -197,7 +196,39 @@ function say(a, f, cont) {
 	B.style.left = "0px"
 	B.style.top = "0px"
 	B.style.display = "block"
-	BM.innerHTML = what
+	if (Array.isArray(what)) {
+		BM.innerText = ""
+		const ol = document.createElement('ol')
+		what.map(function(option) {
+			const text = option.text()
+			if (text) {
+				const li = document.createElement('li'),
+					a = document.createElement('a')
+				a.href = "javascript:void(0)"
+				a.onclick = option.action
+				a.innerHTML = text
+				li.appendChild(a)
+				ol.appendChild(li)
+			}
+		})
+		BM.appendChild(ol)
+		B.next = null
+	} else {
+		BM.innerHTML = what
+		B.talking = 1
+		B.time = Date.now()
+		B.next = function() {
+			if (a.length > 0) {
+				say(a, f, 1)
+			} else {
+				clear()
+				B.talking = 0
+				B.next = null
+				f && f()
+			}
+		}
+		B.tid = setTimeout(B.next, 1000 + 200 * what.split(' ').length)
+	}
 	const whoRect = who.getBoundingClientRect(),
 		bubbleRect = B.getBoundingClientRect(),
 		margin = parseFloat(getComputedStyle(B).fontSize),
@@ -213,19 +244,6 @@ function say(a, f, cont) {
 	B.style.top = ((whoRect.y || whoRect.top) -
 		bubbleRect.height - margin * 1.5) + "px"
 	BP.style.left = (cx - x) + "px"
-	B.time = Date.now()
-	B.talking = 1
-	B.next = function() {
-		if (a.length > 0) {
-			say(a, f, 1)
-		} else {
-			clear()
-			B.talking = 0
-			B.next = null
-			f && f()
-		}
-	}
-	B.tid = setTimeout(B.next, 1000 + 200 * what.split(' ').length)
 }
 
 function show(name) {
@@ -239,8 +257,8 @@ function show(name) {
 	visibles.length = 0
 	const bg = window[name]
 	bg && visibles.push(bg)
-	state.scene = scenes[name]
-	state.scene()
+	state.scene = name
+	scenes[name]()
 	visibles.forEach((o) => o.style.visibility = "visible")
 }
 
@@ -285,7 +303,7 @@ function resize() {
 	style.transform = `scale(${ratio})`
 	style.display = "block"
 
-	show("Stern")
+	show(state.scene)
 }
 
 window.onload = function() {
