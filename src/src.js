@@ -12,7 +12,7 @@ const scenes = {
 				Sheryl, Watch, Googles
 			])
 			hot(Dave, function() {
-				sayLater(Dave, "That's me!")
+				sayLater([Dave, "That's me!"])
 			})
 			hot(Sheryl, function() {
 				sayLater([Dave, "Hi, Sheryl, you swimming?",
@@ -20,10 +20,10 @@ const scenes = {
 				])
 			})
 			hot(Watch, function() {
-				sayLater(Dave, "That's a sharp looking diving watch!")
+				sayLater([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater(Dave, "Diving googles!")
+				sayLater([Dave, "Diving googles!"])
 			})
 		},
 		Cabin: function() {
@@ -49,10 +49,10 @@ const scenes = {
 				])
 			})
 			hot(Watch, function() {
-				sayLater(Dave, "That's a sharp looking diving watch!")
+				sayLater([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater(Dave, "Diving googles!")
+				sayLater([Dave, "Diving googles!"])
 			})
 			hot(Amanda, function() {
 				sayLater([Dave, "What do you think, Amanda?",
@@ -105,7 +105,7 @@ const scenes = {
 			])
 			if (!state.bow) {
 				state.bow = 1
-				say(Dave, "I'm the king of the world!")
+				say([Dave, "I'm the king of the world!"])
 			}
 		},
 		Bridge: function() {
@@ -122,10 +122,10 @@ const scenes = {
 				Sheryl, "Not you.",
 			])
 			hot(Watch, function() {
-				sayLater(Dave, "That's a sharp looking diving watch!")
+				sayLater([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater(Dave, "Diving googles!")
+				sayLater([Dave, "Diving googles!"])
 			})
 		},
 		Store: function() {
@@ -134,7 +134,7 @@ const scenes = {
 			show([Boat, Store,
 				DaveLeaning
 			])
-			say(DaveLeaning, "What's in here?")
+			say([DaveLeaning, "What's in here?"])
 		},
 		Underwater: function() {
 			set(Boat, 250, -250)
@@ -147,7 +147,7 @@ const scenes = {
 				Shark,
 				Key
 			])
-			say(DaveDiving, "Whoa!!!!!!")
+			say([DaveDiving, "Whoa!!!!!!"])
 		},
 	},
 	state = {
@@ -175,14 +175,13 @@ function skip() {
 	}
 }
 
-function sayLater(who, what) {
-	B.talking || say(who, what)
+function sayLater(a) {
+	B.talking || say(a)
 }
 
-function say(who, what) {
-	const a = Array.isArray(who) ? who : [who, what]
-	who = a.shift()
-	what = a.shift()
+function say(a) {
+	const who = a.shift(),
+		what = a.shift()
 	clear()
 	// Set this for getBoundingClientRect() to work as expected.
 	B.style.left = "0px"
@@ -235,7 +234,7 @@ function go(name) {
 	if (B.talking) {
 		return
 	} else if (name == "Underwater" && !state.inventory.includes("Googles")) {
-		sayLater(Dave, "I need diving googles to see anything.")
+		say([Dave, "I need diving googles to see anything."])
 		return
 	}
 	clear()
