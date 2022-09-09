@@ -12,18 +12,18 @@ const scenes = {
 				Sheryl, Watch, Googles
 			])
 			hot(Dave, function() {
-				sayLater([Dave, "That's me!"])
+				say([Dave, "That's me!"])
 			})
 			hot(Sheryl, function() {
-				sayLater([Dave, "Hi, Sheryl, you swimming?",
+				say([Dave, "Hi, Sheryl, you swimming?",
 					Sheryl, "None of your business, Dave.",
 				])
 			})
 			hot(Watch, function() {
-				sayLater([Dave, "That's a sharp looking diving watch!"])
+				say([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater([Dave, "Diving googles!"])
+				say([Dave, "Diving googles!"])
 			})
 		},
 		Cabin: function() {
@@ -44,18 +44,18 @@ const scenes = {
 				Skipper
 			])
 			hot(Sheryl, function() {
-				sayLater([Dave, "What do you think, Sheryl?",
+				say([Dave, "What do you think, Sheryl?",
 					Sheryl, "I think it was a heart attack, Dave.",
 				])
 			})
 			hot(Watch, function() {
-				sayLater([Dave, "That's a sharp looking diving watch!"])
+				say([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater([Dave, "Diving googles!"])
+				say([Dave, "Diving googles!"])
 			})
 			hot(Amanda, function() {
-				sayLater([Dave, "What do you think, Amanda?",
+				say([Dave, "What do you think, Amanda?",
 					Amanda, "It may have something to do with the Triangle…",
 					Dave, "What Triangle?",
 					Amanda, "We're in the middle of the Bermuda Triangle!",
@@ -64,7 +64,7 @@ const scenes = {
 				])
 			})
 			hot(Book, function() {
-				sayLater([Dave, "What's that book?",
+				say([Dave, "What's that book?",
 					Amanda, "It's about the Bermuda Triangle!",
 					Amanda, "We are in the Bermuda Triangle - right now!",
 					Dave, "And why's that important?",
@@ -72,7 +72,7 @@ const scenes = {
 				])
 			})
 			hot(Bruce, function() {
-				sayLater([Dave, "Did you see anything, Bruce?",
+				say([Dave, "Did you see anything, Bruce?",
 					Bruce, "I saw how he was looking at my wife.",
 					Dave, "Yeah, and this is why you killed him?",
 					Bruce, "I didn't kill the slacker. Must have been ill or something.",
@@ -80,7 +80,7 @@ const scenes = {
 				])
 			})
 			hot(Skipper, function() {
-				sayLater([Dave, "He looks unharmed. Apart from that little scratch on his arm.",
+				say([Dave, "He looks unharmed. Apart from that little scratch on his arm.",
 					Bruce, "Death by scratch",
 				])
 			})
@@ -122,10 +122,10 @@ const scenes = {
 				Sheryl, "Not you.",
 			])
 			hot(Watch, function() {
-				sayLater([Dave, "That's a sharp looking diving watch!"])
+				say([Dave, "That's a sharp looking diving watch!"])
 			})
 			hot(Googles, function() {
-				sayLater([Dave, "Diving googles!"])
+				say([Dave, "Diving googles!"])
 			})
 		},
 		Store: function() {
@@ -175,11 +175,10 @@ function skip() {
 	}
 }
 
-function sayLater(a) {
-	B.talking || say(a)
-}
-
-function say(a) {
+function say(a, cont) {
+	if (!cont && B.talking) {
+		return
+	}
 	const who = a.shift(),
 		what = a.shift()
 	clear()
@@ -207,7 +206,7 @@ function say(a) {
 	B.talking = 1
 	B.next = function() {
 		if (a.length > 0) {
-			say(a)
+			say(a, 1)
 		} else {
 			clear()
 			B.talking = 0
