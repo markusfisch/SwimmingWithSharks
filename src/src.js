@@ -36,13 +36,18 @@ const scenes = {
 			set(Amanda, 45, -5)
 			set(Book, 35, 21, 1, -20)
 			set(Bruce, 84)
+			set(Mousse, -10, -30)
 			show([Boat, Cabin,
 				Dave,
 				Sheryl, Watch, Goggles,
 				Amanda, Book,
 				Bruce,
-				Skipper
+				Skipper,
+				Mousse
 			])
+			hot(Mousse, function() {
+				say([Dave, "The salmon mousse"])
+			})
 			hot(Sheryl, function() {
 				say([Dave, "What do you think, Sheryl?",
 					Sheryl, "I think it was a heart attack, Dave.",
