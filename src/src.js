@@ -53,7 +53,7 @@ const scenes = {
 				}, -39, 14, .17, 10)
 				set(Goggles, function() {
 					say([Dave, "Diving goggles!"])
-				}, -61, 28, .4, -100)
+				}, -61, 28, .3, -100)
 			} else {
 				set(Bruce, function() {
 					say([Dave, "Did you hear that scream?",
@@ -67,10 +67,16 @@ const scenes = {
 			set(Boat, null, -12, -5)
 			set(Dave, null, -68, 10)
 			set(Skipper, function() {
-				say([Dave, "He looks unharmed. Apart from that little scratch on his arm.",
-					Bruce, "Death by scratch",
-				])
+				if (discover) {
+					say([Dave, "Still dead."])
+				} else {
+					say([Dave, "No pulse. But he looks unharmed. Apart from that little scratch on his arm.",
+						Bruce, "Death by scratch",
+					])
+				}
 			}, -10, 20)
+			set(Plate, null, -35, -5, .5)
+			set(Knife, null, -35, -2, .5)
 			set(Mousse, function() {
 				say([Mousse, [
 					{
@@ -104,7 +110,7 @@ const scenes = {
 						action: clear
 					},
 				]])
-			}, -10, -30)
+			}, 0, -5, .5)
 			if (state.discover) {
 				set(Bruce, function() {
 					say([Dave, "Anything new?",
@@ -118,7 +124,7 @@ const scenes = {
 						Sheryl, "I think it was a heart attack, Dave.",
 					])
 				}, 50)
-				set(Goggles, null, 39, 28, .4, -100)
+				set(Goggles, null, 39, 28, .3, -100)
 				set(Watch, function() {
 					say([Dave, "That's a sharp looking diving watch!",
 						Sheryl, "Thank you."
@@ -152,7 +158,7 @@ const scenes = {
 							}
 						},
 					]])
-				}, 98, 21, 1, 20)
+				}, 98, 21, .4, 20)
 				set(Bruce, function() {
 					say([Dave, "Did you see anything, Bruce?",
 						Bruce, "I saw how he was looking at my wife.",
@@ -187,7 +193,7 @@ const scenes = {
 				set(Sheryl, null, -75)
 				set(Goggles, function() {
 					say([Dave, "Diving goggles!"])
-				}, -86, 28, .4, -100)
+				}, -86, 28, .3, -100)
 				set(Watch, function() {
 					say([Dave, "That's a sharp looking diving watch!"])
 				}, -64, 14, .17, 10)
@@ -210,13 +216,21 @@ const scenes = {
 		Store: function() {
 			set(Boat, null, -200, -20)
 			set(DaveLeaning, null, -43, 10)
+			set(Aid, function() {
+				addInventory(Aid)
+			}, -66, 47, .4, 10)
+			set(Bottle, null, -32, 30, .5, 30)
+			set(Bra, null, -6, 18, .5, 180)
+			set(Flag, null, 20, -5, .75, 20)
+			set(DiverKnife, null, -7, -4, .5, 20)
+			set(Screwdriver, null, 41, -16, .5, -40)
 			say([DaveLeaning, "What's in here?"])
 		},
 		Underwater: function() {
 			Goggles.inScene = 1
 			set(Boat, null, 250, -250)
 			set(DaveDiving, null, -70, -40)
-			set(Goggles, null, -70, -52, .4)
+			set(Goggles, null, -70, -52, .3)
 			if (!state.sharkGone) {
 				set(Shark, function() {
 					say([DaveDiving, "Hi fella…"])
@@ -230,7 +244,7 @@ const scenes = {
 				} else {
 					say([DaveDiving, "I can't get around the shark!"])
 				}
-			}, 100, 132, .6, 30)
+			}, 100, 132, .5)
 		},
 	},
 	visibles = [],
@@ -247,6 +261,16 @@ function removeFromInventory(e) {
 	state.inventory = state.inventory.filter((item) => item != e)
 }
 
+function currentDave() {
+	if (Dave.style.visibility == "visible") {
+		return Dave
+	} else if (DaveLeaning.style.visibility == "visible") {
+		return DaveLeaning
+	} else if (DaveDiving.style.visibility == "visible") {
+		return DaveDiving
+	}
+}
+
 function updateInventory() {
 	let x = 0
 	state.inventory.forEach((e) => {
@@ -257,7 +281,7 @@ function updateInventory() {
 		e.style.transform = `translate(${x}px, 0px) rotate(0) scale(.5)`
 		e.style.visibility = 'visible'
 		e.onclick = function() {
-			e.use && e.use() || say([Dave, "Can't use that here."])
+			e.use && e.use() || say([currentDave(), "Can't use that here."])
 		}
 		x += 30
 	})
@@ -401,7 +425,7 @@ function resize() {
 	centerX = stageWidth * .5
 	centerY = stageHeight * .5
 
-	const style = document.getElementById("S").style
+	const style = S.style
 	style.width = stageWidth + "px"
 	style.height = stageHeight + "px"
 	style.transformOrigin = "top left"
@@ -413,7 +437,7 @@ function resize() {
 
 window.onload = function() {
 	;[...document.getElementsByTagName("g")].forEach(e => window[e.id] = e)
-	;["B", "BM", "BP"].forEach(id => window[id] = document.getElementById(id))
+	;["S", "B", "BM", "BP"].forEach(id => window[id] = document.getElementById(id))
 	;["SternCabin", "SternBridge", "SternDeck", "SternUnderwater",
 		"BridgeStern",
 		"DeckStern",
