@@ -1,10 +1,19 @@
 "use strict"
 
-const scenes = {
+const visibles = [],
+	state = {
+		inventory: [],
+		scene: "Stern"
+	},
+	scenes = {
 		Stern: function() {
 			set(Boat, null, 230, 24)
 			set(Dave, function() {
-				say([Dave, "That's me!"])
+				say([Dave, state.daveFirst
+					? "Stop tickling me!"
+					: "That's me!"
+				])
+				state.daveFirst = 1
 			})
 			if (state.discover) {
 				set(Sheryl, function() {
@@ -15,7 +24,7 @@ const scenes = {
 								: "Hi, Sheryl, you swimming?",
 							action: function() {
 								if (state.swimming) {
-									say([Sheryl, "Again, none of your business. But no, just fish and sand."])
+									say([Sheryl, "No, just fish and sand."])
 								} else {
 									state.swimming = 1
 									say([Sheryl, "None of your business, Dave."])
@@ -27,19 +36,8 @@ const scenes = {
 								? null
 								: "Can I have your diving goggles?",
 							action: function() {
-								addInventory(Goggles)
-								say([Sheryl, "Sure, here…",
-									Dave, "Ouch!",
-									Sheryl, "Oh sorry, I scratched you with my watch.",
-									Dave, "I'm feeling dizzy…",
-								], function() {
-									FX.style.background = "#000"
-									FX.style.display = "block"
-									FX.innerHTML = "You die."
-									FX.onclick = function() {
-										location.reload()
-									}
-								})
+								say([Sheryl, "No, they are mine and I don't borrow my things.",
+								])
 							}
 						},
 						{
@@ -49,7 +47,9 @@ const scenes = {
 					]])
 				}, -50)
 				set(Watch, function() {
-					say([Dave, "That's a sharp looking diving watch!"])
+					say([Dave, "That's a sharp looking diving watch!",
+						Sheryl, "Thank you.",
+					])
 				}, -39, 14, .17, 10)
 				set(Goggles, function() {
 					say([Dave, "Diving goggles!"])
@@ -57,30 +57,75 @@ const scenes = {
 			} else {
 				set(Bruce, function() {
 					say([Dave, "Did you hear that scream?",
-						Bruce, "Yes, it came from the cabin!",
+						Bruce, "Yes, it came from the cabin! Let's take a look!",
 					])
 				}, -50)
-				say([SternCabin, "AAAAAAAHH!!"])
+				if (!state.scream) {
+					state.scream = 1
+					say([SternCabin, "AAAAAAAHH!!"])
+				}
 			}
 		},
 		Cabin: function() {
 			set(Boat, null, -12, -5)
 			set(Dave, null, -68, 10)
 			set(Skipper, function() {
-				if (discover) {
-					say([Dave, "Still dead."])
+				if (state.discover) {
+					say([Dave, state.checkKeys
+						? "No keys."
+						: "Still dead. Got to find out who killed him."
+					])
 				} else {
 					say([Dave, "No pulse. But he looks unharmed. Apart from that little scratch on his arm.",
 						Bruce, "Death by scratch",
 					])
 				}
-			}, -10, 20)
-			set(Plate, null, -35, -5, .5)
-			set(Knife, null, -35, -2, .5)
+			}, -15, 22, 1, -10)
+			const plateKnifeOptions = [
+				{
+					text: () => state.inventory.includes(Plate)
+						? null
+						: "Take the plate.",
+					action: function() {
+						addInventory(Plate)
+						clear()
+					}
+				},
+				{
+					text: () => state.inventory.includes(Knife)
+						? null
+						: "Take the knife.",
+					action: function() {
+						addInventory(Knife)
+						clear()
+					}
+				},
+				{
+					text: () => "Leave it alone.",
+					action: clear
+				},
+			]
+			set(Plate, function() {
+				say([Plate, plateKnifeOptions])
+			}, -33, 0, .5)
+			set(Knife, function() {
+				say([Knife, plateKnifeOptions])
+			}, -33, 0, .5, 20)
 			set(Mousse, function() {
 				say([Mousse, [
 					{
-						text: () => "Take the salmon mousse.",
+						text: () => "Taste the salmon mousse.",
+						action: function() {
+							say([Dave, "Not bad.",
+								Bruce, "And you're still alive, kid.",
+								Dave, "I think that settles the mousse theory.",
+							])
+						}
+					},
+					{
+						text: () => state.sawShark
+							? "Take it."
+							: null,
 						action: function() {
 							addInventory(Mousse, function() {
 								if (state.scene == "Underwater" &&
@@ -97,34 +142,34 @@ const scenes = {
 						}
 					},
 					{
-						text: () => "Taste it.",
-						action: function() {
-							say([Dave, "Not bad.",
-								Bruce, "And you're still alive, kid.",
-								Dave, "I think that settles the mousse theory.",
-							])
-						}
-					},
-					{
-						text: () => "Leave it.",
+						text: () => "Leave it alone.",
 						action: clear
 					},
 				]])
 			}, 0, -5, .5)
 			if (state.discover) {
 				set(Bruce, function() {
-					say([Dave, "Anything new?",
-						Bruce, "He didn't move."
-					])
+					say(state.checkKeys
+						? [Dave, "Have you seen the keys for the boat?",
+							Bruce, "No, I haven't. We should better find them!",
+						]
+						: [Dave, "Anything new?",
+							Bruce, "He didn't move, son."
+						]
+					)
 				}, 84)
 			} else {
-				state.discover = 1
+				onLeave = function() {
+					state.discover = 1
+				}
 				set(Sheryl, function() {
 					say([Dave, "What do you think, Sheryl?",
 						Sheryl, "I think it was a heart attack, Dave.",
 					])
 				}, 50)
-				set(Goggles, null, 39, 28, .3, -100)
+				set(Goggles, function() {
+					say([Dave, "Diving goggles."])
+				}, 39, 28, .3, -100)
 				set(Watch, function() {
 					say([Dave, "That's a sharp looking diving watch!",
 						Sheryl, "Thank you."
@@ -158,7 +203,7 @@ const scenes = {
 							}
 						},
 					]])
-				}, 98, 21, .4, 20)
+				}, 81, 21, .35, 18)
 				set(Bruce, function() {
 					say([Dave, "Did you see anything, Bruce?",
 						Bruce, "I saw how he was looking at my wife.",
@@ -181,8 +226,8 @@ const scenes = {
 		Deck: function() {
 			set(Boat, null, -230, 64)
 			set(Dave, null, 30, -2)
-			if (!state.discover && !state.bow) {
-				state.bow = 1
+			if (!state.discover && !state.deckFirst) {
+				state.deckFirst = 1
 				say([Dave, "I'm the king of the world!"])
 			}
 		},
@@ -192,7 +237,7 @@ const scenes = {
 				set(Dave)
 				set(Sheryl, null, -75)
 				set(Goggles, function() {
-					say([Dave, "Diving goggles!"])
+					say([Dave, "Diving goggles."])
 				}, -86, 28, .3, -100)
 				set(Watch, function() {
 					say([Dave, "That's a sharp looking diving watch!"])
@@ -206,11 +251,17 @@ const scenes = {
 					say([Dave, "What are you doing up here?",
 						Amanda, "I've checked the steering and the keys are missing!",
 						Dave, "So we can't move?",
-						Amanda, "Exactly. Very strange."
-					])
+						Amanda, "Exactly. Maybe the skipper still has them."
+					], function() {
+						state.checkKeys = 1
+					})
 				})
 			} else {
 				set(Dave)
+				if (!state.bridgeFirst) {
+					state.bridgeFirst = 1
+					say([Dave, "Nice view."])
+				}
 			}
 		},
 		Store: function() {
@@ -218,22 +269,46 @@ const scenes = {
 			set(DaveLeaning, null, -43, 10)
 			set(Aid, function() {
 				addInventory(Aid)
+				say([DaveLeaning, "A first aid kit."])
 			}, -66, 47, .4, 10)
-			set(Bottle, null, -32, 30, .5, 30)
-			set(Bra, null, -6, 18, .5, 180)
-			set(Flag, null, 20, -5, .75, 20)
-			set(DiverKnife, null, -7, -4, .5, 20)
-			set(Screwdriver, null, 41, -16, .5, -40)
-			say([DaveLeaning, "What's in here?"])
+			set(Bottle, function() {
+				addInventory(Bottle)
+				say([DaveLeaning, "A bottle of alcohol."])
+			}, -32, 30, .5, 30)
+			set(Bra, function() {
+				addInventory(Bra)
+				say([DaveLeaning, "A bra? What does that do here?"])
+			}, -6, 18, .5, 180)
+			set(Flag, function() {
+				addInventory(Flag)
+				say([DaveLeaning, "A white flag. Hm."])
+			}, 20, -5, .75, 20)
+			set(DiverKnife, function() {
+				addInventory(DiverKnife)
+				say([DaveLeaning, "A diver knife!"])
+			}, -7, -4, .5, 20)
+			set(Screwdriver, function() {
+				addInventory(Screwdriver)
+				say([DaveLeaning, "A screwdriver."])
+			}, 41, -16, .5, -40)
+			if (!state.storeFirst) {
+				state.storeFirst = 1
+				say([DaveLeaning, "There's a lot of stuff in here!"])
+			}
 		},
 		Underwater: function() {
 			Goggles.inScene = 1
 			set(Boat, null, 250, -250)
 			set(DaveDiving, null, -70, -40)
 			set(Goggles, null, -70, -52, .3)
+			set(Gold, function() {
+				say([DaveDiving, "Gold! So that's what's it all about! Sheryl found something!",
+				])
+			}, -60, 115)
 			if (!state.sharkGone) {
+				state.sawShark = 1
 				set(Shark, function() {
-					say([DaveDiving, "Hi fella…"])
+					say([DaveDiving, "Easy fella… I should better get up…"])
 				}, 50, 30, 2)
 				say([DaveDiving, "Whoa!!!!!!"])
 			}
@@ -244,36 +319,27 @@ const scenes = {
 				} else {
 					say([DaveDiving, "I can't get around the shark!"])
 				}
-			}, 100, 132, .5)
+			}, 100, 125, .5)
 		},
-	},
-	visibles = [],
-	state = {
-		inventory: [],
-		scene: "Stern"
 	}
 
 let centerX,
-	centerY
+	centerY,
+	onLeave
 
 function removeFromInventory(e) {
 	e.style.visibility = "hidden"
-	state.inventory = state.inventory.filter((item) => item != e)
+	state.inventory = state.inventory.filter(item => item != e)
 }
 
 function currentDave() {
-	if (Dave.style.visibility == "visible") {
-		return Dave
-	} else if (DaveLeaning.style.visibility == "visible") {
-		return DaveLeaning
-	} else if (DaveDiving.style.visibility == "visible") {
-		return DaveDiving
-	}
+	return [Dave, DaveLeaning, DaveDiving].find(dave =>
+		dave.style.visibility == "visible")
 }
 
 function updateInventory() {
 	let x = 0
-	state.inventory.forEach((e) => {
+	state.inventory.forEach(e => {
 		if (e.inScene) {
 			return
 		}
@@ -282,6 +348,11 @@ function updateInventory() {
 		e.style.visibility = 'visible'
 		e.onclick = function() {
 			e.use && e.use() || say([currentDave(), "Can't use that here."])
+		}
+		e.onmousemove = e.ontouchmove = function(event) {
+			if (!(event instanceof MouseEvent) || event.buttons) {
+				say([currentDave(), "Don't drag, just click. I will know what to do."])
+			}
 		}
 		x += 30
 	})
@@ -371,6 +442,10 @@ function say(a, f, cont) {
 }
 
 function show(name) {
+	if (onLeave && name != state.scene) {
+		onLeave()
+		onLeave = null
+	}
 	for (let key in window) {
 		const e = window[key]
 		if (e && e.tagName == "g") {
@@ -384,7 +459,7 @@ function show(name) {
 	bg && visibles.push(bg)
 	state.scene = name
 	scenes[name]()
-	visibles.forEach((o) => o.style.visibility = "visible")
+	visibles.forEach(o => o.style.visibility = "visible")
 	updateInventory()
 }
 
