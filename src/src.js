@@ -410,7 +410,7 @@ function say(a, f, cont) {
 		B.next = null
 	} else {
 		BM.innerHTML = what
-		B.talking = 1
+		B.talking = a.length > 0
 		B.time = Date.now()
 		B.next = function() {
 			if (a.length > 0) {
