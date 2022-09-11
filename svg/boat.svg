@@ -27,13 +27,13 @@
 <g transform="matrix(1, 0, 0, 1, -340, 15)">
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternUnderwater"/>
 </g>
-<g transform="matrix(0.5, -0.866, 0.866, 0.5, -195, 50)">
+<g transform="matrix(0.5, -0.866, 0.866, 0.5, -190, 50)">
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternCabin"/>
 </g>
 <g transform="matrix(-0.5, -0.866, 0.866, -0.5, -100, 25)">
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternBridge"/>
 </g>
-<g transform="matrix(0, -1, 1, 0, -160, 40)">
+<g transform="matrix(0, -1, 1, 0, -152, 50)">
 <path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternDeck"/>
 </g>
 </g>

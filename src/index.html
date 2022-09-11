@@ -12,6 +12,14 @@ body {
 	font: bold min(3vw, 3vh) sans-serif; color: #fff;
 	line-height: 150%;
 	overflow: hidden;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-ms-touch-action: none;
+	user-select: none;
 }
 svg {
 	display: none;
@@ -76,9 +84,9 @@ a {
 		<path style="fill: rgb(183, 148, 88);" d="M -255 68 L -251 79 L -100 79 L -95 66 L -255 68 Z"></path>
 		<path style="stroke-width: 2px; stroke-linejoin: round; fill: none; stroke-linecap: round; stroke: rgb(0, 0, 0);" d="M -257 54 C -258 59 -254 76 -251 79 L -100 79 L -63 -11 L -75 -11"></path>
 		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternUnderwater" transform="matrix(1, 0, 0, 1, -340, 15)"></path>
-		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternCabin" transform="matrix(0.5, -0.866, 0.866, 0.5, -195, 50)"></path>
+		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternCabin" transform="matrix(0.5, -0.866, 0.866, 0.5, -190, 50)"></path>
 		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternBridge" transform="matrix(-0.5, -0.866, 0.866, -0.5, -100, 25)"></path>
-		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternDeck" transform="matrix(0, -1, 1, 0, -160, 40)"></path>
+		<path style="fill: rgba(255, 255, 255, 0.2);" d="M 46 35 L 46 48 L 38 48 L 51 65 L 63 48 C 63 48 55 48 55 48 L 55 35 C 55 35 46 35 46 35 Z" id="SternDeck" transform="matrix(0, -1, 1, 0, -152, 50)"></path>
 	</g>
 	<g id="Bridge">
 		<path style="fill: rgb(183, 148, 88);" d="M -65 -29 C -65 -29 -69 -22 -69 -22 L 45 -22 L 47 -29 L -65 -29 Z"></path>
@@ -144,11 +152,23 @@ a {
 	<path style="fill: rgb(255, 255, 255);" d="M 44 28 L 45 34 L 51 38 L 56 33 L 57 27 L 55 33 L 52 31 L 49 31 L 46 33 L 44 28 Z"></path>
 	<path style="fill: rgb(255, 255, 255);" d="M 44 34 C 44 34 42 31 42 31 L 41 36 L 35 41 L 32 48 L 38 52 L 39 48 L 39 62 L 62 65 L 61 48 L 62 52 L 69 49 L 66 41 L 59 35 C 59 35 59 32 59 32 L 56 35 L 50 45 L 44 34 Z"></path>
 </g>
+<g id="DeadBruce">
+	<path style="fill: rgb(17, 17, 17);" d="M 71 58 L 70 54 C 72 53 73 49 72 49 C 76 40 64 35 60 44 C 59 42 57 46 58 48 L 57 53 L 49 56 L 43 66 L 32 72 L 32 77 L 34 80 L 35 74 L 36 77 L 38 73 L 47 70 L 50 64 L 45 77 L 30 84 L 29 78 L 26 81 L 25 89 L 48 85 L 46 92 L 41 89 L 43 98 L 46 99 L 64 85 L 68 74 L 69 81 L 68 89 L 64 89 L 66 92 L 65 95 L 68 96 L 72 91 L 73 80 L 75 70 L 71 58 Z"></path>
+	<path style="fill: rgb(255, 255, 255);" d="M 58 48 L 57 53 L 60 58 L 68 57 L 70 54 L 67 56 L 64 54 L 61 53 L 58 53 L 58 48 Z"></path>
+	<path style="fill: rgb(255, 255, 255);" d="M 56 53 L 56 50 L 54 53 L 48 55 L 43 65 L 48 68 L 44 77 L 65 86 L 68 77 L 75 75 L 76 70 L 72 58 L 72 54 L 70 56 L 60 65 L 56 53 Z"></path>
+	<path style="stroke: rgb(255, 0, 0); stroke-linecap: round; fill: none;" d="M 72 80 L 70 85"></path>
+</g>
 <g id="Skipper">
-	<path style="fill: rgb(17, 17, 17);" d="M 25 69 L 23 69 C 24 68 18 63 18 63 C 3 66 5 77 20 75 C 21 75 22 76 23 76 L 25 84 L 34 92 L 48 94 L 52 99 L 53 95 L 51 93 L 52 90 L 48 91 L 37 89 L 32 82 L 49 86 L 81 91 L 85 97 L 87 94 L 83 88 L 60 79 L 91 82 L 96 75 L 95 73 L 89 78 L 55 70 L 40 68 L 51 67 L 60 68 L 64 71 L 63 69 L 67 68 L 68 66 L 62 65 L 51 62 L 35 64 L 25 69 Z"></path>
-	<path style="fill: rgb(255, 255, 255);" d="M 12 65 C 6 65 3 77 13 75 C 11 74 10 70 12 65 Z"></path>
-	<path style="fill: rgb(17, 17, 17);" d="M 12 65 C 10 52 6 69 12 74 C 11 70 11 70 12 65 Z"></path>
-	<path style="fill: rgb(255, 255, 255);" d="M 23 73 L 20 77 L 23 78 C 23 78 25 84 25 84 L 29 89 L 36 86 L 33 83 L 46 89 L 52 84 L 52 74 L 58 70 L 43 68 L 46 62 L 35 64 L 26 68 L 34 72 C 34 72 23 73 23 73 Z"></path>
+	<path style="fill: rgb(17, 17, 17);" d="M 24 76 L 22 76 C 23 75 16 71 16 71 C 2 76 6 87 20 83 C 22 83 23 83 23 83 L 26 91 L 35 98 L 50 98 L 55 99 L 56 98 L 52 96 L 53 94 L 49 95 L 38 95 L 32 88 L 82 92 L 87 97 L 88 94 L 84 88 L 60 82 L 91 82 L 95 74 L 94 72 L 88 78 L 39 73 L 49 71 L 59 71 L 63 74 L 62 72 L 66 70 L 66 68 L 60 68 L 49 66 L 33 70 L 24 76 Z"></path>
+	<path style="fill: rgb(255, 255, 255);" d="M 10 74 C 4 74 3 87 13 84 C 10 83 9 79 10 74 Z"></path>
+	<path style="fill: rgb(17, 17, 17);" d="M 11 74 C 7 61 5 78 12 83 C 10 79 10 79 11 74 Z"></path>
+	<path style="fill: rgb(255, 255, 255);" d="M 23 80 L 20 84 L 23 85 C 23 85 26 91 26 91 L 31 96 L 37 91 L 34 89 L 47 93 L 53 87 L 52 78 L 57 73 L 42 73 L 44 66 L 33 69 L 25 75 L 34 78 C 34 78 23 80 23 80 Z"></path>
+	<path style="stroke: rgb(255, 0, 0); stroke-linecap: round; fill: none;" d="M 51 68 L 53 70"></path>
+	<g id="KnifeInHead">
+		<path style="fill: rgb(255, 2, 0);" d="M 12 76 C 13 76 13 76 13 76 C 13 80 15 83 16 84 C 16 84 12 82 12 76 Z"></path>
+		<path style="fill: rgb(17, 17, 17);" d="M 14 66 L 12 66 L 12 60 L 14 60 L 14 66 Z"></path>
+		<path style="fill: rgb(255, 255, 255);" d="M 14 66 L 12 66 L 12 76 L 13 76 L 14 66 Z"></path>
+	</g>
 </g>
 <g id="Shark">
 	<path style="fill: rgb(255, 255, 255);" d="M 35 57 C 32 55 25 57 22 57 C 3 51 21 45 38 42 C 39 38 44 29 49 30 C 49 34 52 42 52 42 L 77 47 C 77 39 85 28 85 29 C 82 40 83 54 89 61 C 89 62 81 59 78 52 L 67 55 L 68 59 L 64 56 L 51 60 L 53 70 C 49 71 39 66 38 62 L 26 59 C 28 55 40 59 35 57 Z"></path>
@@ -160,7 +180,7 @@ a {
 	<path style="fill: rgb(17, 17, 17);" d="M 35 29 L 35 69 L 67 69 L 67 29 L 35 29 Z"></path>
 	<path style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 3px;" d="M 43 56 L 59 56 L 51 39 L 43 56 Z"></path>
 </g>
-<g id="Mousse">
+<g id="Can">
 	<path style="fill: rgb(255, 255, 255);" d="M 41 39 L 41 67 C 41 73 65 73 65 67 L 65 39 C 65 45 41 45 41 39 Z"></path>
 	<path style="fill: rgb(17, 17, 17);" d="M 41 39 C 41 45 65 45 65 39 C 65 33 41 33 41 39 Z"></path>
 	<path style="fill: rgb(17, 17, 17);" d="M 23 21 C 20 25 37 42 41 39 C 44 34 28 18 23 21 Z"></path>
@@ -170,6 +190,9 @@ a {
 	<ellipse style="fill: rgb(255, 255, 255);" cx="50" cy="50" rx="31" ry="11"></ellipse>
 	<ellipse style="fill: rgb(255, 255, 255);" cx="50" cy="58" rx="21" ry="6"></ellipse>
 	<ellipse style="fill: rgb(221, 221, 221);" cx="50" cy="51" rx="21" ry="6"></ellipse>
+	<g id="Mousse">
+		<path style="fill: rgb(216, 107, 90);" d="M 64 51 C 64 39 37 39 37 51 C 35 53 58 56 64 51 Z"></path>
+	</g>
 </g>
 <g id="Knife">
 	<path style="fill: rgb(17, 17, 17);" d="M 57 44 L 55 42 L 69 28 L 72 31 L 57 44 Z"></path>
