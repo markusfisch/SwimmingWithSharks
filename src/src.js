@@ -123,7 +123,8 @@ const visibles = [],
 			set(Boat, null, -12, -5)
 			set(Dave, null, -68, 10)
 			set(Skipper, function() {
-				if (state.sawShark && !state.inventory.includes(Knife)) {
+				if (state.sawShark && !state.sharkGone &&
+						!state.inventory.includes(Knife)) {
 					KnifeInHead.style.visibility = "hidden"
 					BloodOnKnife.style.visibility = "visible"
 					addInventory(Knife, function() {
@@ -190,7 +191,7 @@ const visibles = [],
 			}
 			if (state.knifeFell) {
 				set(Plate, takePlate, -33, 0, .5)
-				if (!state.inventory.includes(Knife)) {
+				if (!state.sharkGone && !state.inventory.includes(Knife)) {
 					KnifeInHead.style.visibility = "visible"
 				}
 				Blood.style.visibility = "visible"
