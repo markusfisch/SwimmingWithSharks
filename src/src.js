@@ -3,10 +3,29 @@
 const visibles = [],
 	state = {
 		inventory: [],
-		scene: "Stern"
+		scene: "Sea"
 	},
 	scenes = {
-		Stern: function() {
+		Sea: function() {
+			set(Sea, null, 0, 0, 3)
+			set(BoatTop, null, 45, -45, .3, 45)
+			FX.innerHTML = "Somewhere near the Bermudas…"
+			FX.style.display = "block"
+			BoatTop.animate(
+					[
+							{transform: BoatTop.style.transform},
+							{transform: translate(0, 0, .3, 45)},
+					], {
+							duration: 2000,
+							fill: "forwards"
+					}
+			).play()
+			setTimeout(function() {
+				FX.style.display = "none"
+				show("Cockpit")
+			}, 2000)
+		},
+		Cockpit: function() {
 			set(Boat, null, 230, 24)
 			if (state.bodyFound) {
 				state.bodyFoundAndCabinLeft = 1
@@ -86,7 +105,7 @@ const visibles = [],
 				}, -50)
 				if (!state.scream) {
 					state.scream = 1
-					say([SternCabin, "AAAAAAAHH!!",
+					say([CockpitCabin, "AAAAAAAHH!!",
 						Dave, "Did you hear that scream?",
 						Bruce, "Yes, it came from the cabin! Let's take a look!",
 					])
@@ -97,7 +116,21 @@ const visibles = [],
 			set(Boat, null, -12, -5)
 			set(Dave, null, -68, 10)
 			set(Skipper, function() {
-				if (state.bodyFoundAndCabinLeft) {
+				if (state.sawShark && !state.inventory.includes(Knife)) {
+					KnifeInHead.style.visibility = "hidden"
+					BloodOnKnife.style.visibility = "visible"
+					addInventory(Knife, function() {
+						if (state.scene == "Deck") {
+							consume(Knife)
+							BloodOnKnife.style.visibility = "hidden"
+							state.sharkGone = 1
+							say([Dave, "Is it a bird? Is it a plane? No, it's a bloody knife to lure the shark away!"])
+						} else {
+							noUse()
+						}
+					})
+					say([Dave, "Sorry skipper, I need that."])
+				} else if (state.bodyFoundAndCabinLeft) {
 					let m
 					if (state.checkKeys && !state.keysChecked) {
 						state.keysChecked = 1
@@ -117,21 +150,25 @@ const visibles = [],
 			}, -10, 22, 1)
 			const takePlate = function() {
 				addInventory(Plate, function() {
-					if (state.mousse && state.scene == "Stern") {
+					if (state.mousse && state.scene == "Cockpit") {
 						say([Dave, "Would you like some salmon mousse?",
 							Sheryl, "Actually, I would. Thank you."
 						], function() {
-							consume(Plate)
 							Mousse.style.visibility = "hidden"
-							say([Sheryl, "Mumf!",
-								Sheryl, "I think I need to use the bathroom… excuse me.",
-								Sheryl, "And don't touch my goggles!",
-							], function() {
-								Sheryl.style.visibility = "hidden"
-								Watch.style.visibility = "hidden"
-								state.leftGoggle = 1
-								setLeftGoggles()
-							})
+							if (state.moussePimped) {
+								consume(Plate)
+								say([Sheryl, "Mumf!",
+									Sheryl, "I think I need to use the bathroom… excuse me.",
+									Sheryl, "And don't touch my goggles!",
+								], function() {
+									Sheryl.style.visibility = "hidden"
+									Watch.style.visibility = "hidden"
+									state.leftGoggle = 1
+									setLeftGoggles()
+								})
+							} else {
+								state.mousse = 0
+							}
 						})
 					} else {
 						noUse()
@@ -141,12 +178,16 @@ const visibles = [],
 			}
 			if (state.knifeFell) {
 				set(Plate, takePlate, -33, 0, .5)
-				KnifeInHead.style.visibility = "visible"
+				if (!state.inventory.includes(Knife)) {
+					KnifeInHead.style.visibility = "visible"
+				}
+				Blood.style.visibility = "visible"
 			} else {
 				const takePlateOrKnife = function() {
 					if (!state.knifeFell) {
 						Knife.style.visibility = "hidden"
 						KnifeInHead.style.visibility = "visible"
+						Blood.style.visibility = "visible"
 						set(Plate, takePlate, -33, 0, .5)
 						state.knifeFell = 1
 						if (Amanda.style.visibility == "visible") {
@@ -170,7 +211,7 @@ const visibles = [],
 					}
 				}
 				set(Plate, takePlateOrKnife, -33, 0, .5)
-				set(Knife, takePlateOrKnife, -33, 0, .5, 20)
+				set(Knife, takePlateOrKnife, -33, 0, .3)
 			}
 			set(Can, function() {
 				say([Can, [
@@ -194,25 +235,6 @@ const visibles = [],
 						}
 					},
 					{
-						text: () => state.sawShark
-							? "Take it."
-							: null,
-						action: function() {
-							addInventory(Can, function() {
-								if (state.scene == "Underwater" &&
-										!state.sharkGone) {
-									state.sharkGone = 1
-									consume(Can)
-									Shark.style.visibility = "hidden"
-									say([DaveDiving, "That worked!"])
-								} else {
-									noUse()
-								}
-							})
-							clear()
-						}
-					},
-					{
 						text: () => "Leave it for later.",
 						action: clear
 					},
@@ -222,7 +244,7 @@ const visibles = [],
 				addInventory(Bottle)
 				say([Dave, "Got a bottle of rum."])
 			}, 20, -12, .5)
-			if (state.hasKey) {
+			if (state.hasKeys) {
 				set(DeadBruce, function() {
 					say([Dave, "Dead. And there's the same scratch! I've got a hunch where it's coming from!"])
 				}, 75, 10)
@@ -236,8 +258,8 @@ const visibles = [],
 					if (state.sawShark) {
 						conv = [Dave, "I know where the keys are!",
 							Bruce, "Really?",
-							Dave, "They're on the bottom of the ocean! But there's a shark and I can't get them.",
-							Bruce, "Hm, you need something to scare it away I guess.",
+							Dave, "They're on the bottom of the sea! But there's a shark and I can't get them.",
+							Bruce, "Hm, so you need something to lure him away.",
 						]
 					} else if (state.checkKeys) {
 						conv = [Dave, "Have you seen the keys for the boat?",
@@ -323,7 +345,9 @@ const visibles = [],
 						{
 							text: () => "Can I have the book?",
 							action: function() {
-								say([Amanda, "No you cannot have it."])
+								say([Amanda, "No you cannot have it. I gave it to Sheryl and she put a kink in it.",
+									Sheryl, "Pff",
+								])
 							}
 						},
 					]])
@@ -358,15 +382,13 @@ const visibles = [],
 				set(Dave, null, 30, -2)
 			} else {
 				set(Dave, null, -28, -2)
-				if (state.hasKey) {
+				if (state.hasKeys) {
 					set(Amanda, function() {
 						say([Dave, "What are you doing here?",
 							Amanda, "I'm looking into Triangle for answers…",
 							Dave, "You're looking into the wrong direction. The solution is directly below you: it's gold!",
 							Amanda, "What?",
-							Dave, "It's Sheryl. She killed the skipper because she found gold and wants to have it all by herself.",
-							Amanda, "How?",
-							Dave, "That flashy big diving watch of hers is poisoned, and I think she scratched the skipper with it.",
+							Dave, "It's Sheryl. She killed the skipper because she found gold and wants to have it all by herself. Better keep away from her.",
 							Amanda, "Oh my god…",
 						])
 					}, 32, -2)
@@ -375,7 +397,7 @@ const visibles = [],
 		},
 		Bridge: function() {
 			set(Boat, null, 20, 124)
-			if (state.hasKey) {
+			if (state.hasKeys) {
 				set(Dave)
 				set(Sheryl, null, -75)
 				set(Watch, function() {
@@ -385,21 +407,33 @@ const visibles = [],
 					Sheryl, "What do you mean?",
 					Dave, "You killed the skipper and Bruce!",
 					Sheryl, "Why do you think that?",
-					Dave, "Because I know you found the gold, and obviousely you want it all for yourself! You killed the skipper to prevent us from moving away, and threw the keys in the ocean where only you could find them!",
-					Dave, "Then you killed Bruce when you were all alone with him. Didn't you?",
-					Sheryl, "And how did I kill them? I am a woman.",
-					Dave, "With that sharp diving watch of yours! Obviousely it's poisoned!",
-					Sheryl, "No, no, no, darling, you got that all wrong.",
-					Dave, "Keep your distance! I won't fall for it as easily as the others!",
-				])
+					Dave, "Because I know you found the gold, and obviousely you want it all for yourself! You killed the skipper to stop us from leaving and threw the keys into the sea where only you could find them!",
+					Dave, "And then you killed Bruce when you were all alone with him. Didn't you?",
+					Sheryl, "Ridiculous! How could I have done all that?",
+					Dave, "With that sharp diving watch of yours! Obviousely it's poisoned! And sharp for a reason!",
+					Sheryl, "No, no, no, darling, you got that all wrong…",
+					Dave, "Keep your distance!",
+					Sheryl, "You're such a smart man…",
+					Dave, "Don't touch me!!",
+					Sheryl, "Whoaaa…",
+				], function() {
+					Sheryl.style.visibility = "hidden"
+					Watch.style.visibility = "hidden"
+					say([Dave, "That… was clearly your own fault!",
+						Sheryl, "Help me! You idiot!",
+						Dave, "I'll be back with the Coast Guard!",
+					], function() {
+						show("End")
+					})
+				})
 			} else if (state.bodyFound) {
 				set(Dave, null, -75)
 				set(Amanda, function() {
 					if (state.sawShark) {
-						say([Dave, "I found the keys! They're on the bottom of the ocean! But there's a shark and I can't get them.",
+						say([Dave, "I found the keys! They're on the bottom of the sea! But there's a shark and I can't get them.",
 							Amanda, "A shark!",
 							Dave, "Yes. Do you have any idea how to get rid of the shark?",
-							Amanda, "Sorry, I don't know much about sharks. They eat fish. That's all I know.",
+							Amanda, "Sorry, I don't know much about sharks. Just that they can smell blood from miles away.",
 						])
 					} else if (state.keysChecked) {
 						say([Dave, "The skipper had no keys.",
@@ -429,62 +463,108 @@ const visibles = [],
 			set(Boat, null, -200, -20)
 			set(DaveLeaning, null, -43, 10)
 			set(Aid, function() {
-				addInventory(Aid)
+				addInventory(Aid, function() {
+					consume(Aid)
+					addInventory(Laxative, function() {
+						if (state.inventory.includes(Plate) &&
+								state.mousse) {
+							consume(Laxative)
+							state.moussePimped = 1
+							say([currentDave(), "Now the mousse is not only delicious, but also thoroughly cleansing."])
+						} else {
+							noUse()
+						}
+					})
+					say([currentDave(), "Oh, I found a laxative."])
+				})
 				say([DaveLeaning, "A first aid kit. I'm afraid it's too late for that."])
 			}, -66, 47, .4, 10)
 			set(Bra, function() {
-				addInventory(Bra)
-				say([DaveLeaning, "A bra? Well maybe the skipper was a ladies' man after all."])
+				say([DaveLeaning, "A bra? Well maybe the skipper was a ladies' man after all.",
+					DaveLeaning, "Better leave it here.",
+				])
 			}, -6, 18, .5, 180)
-			set(Flag, function() {
-				addInventory(Flag)
-				say([DaveLeaning, "A white flag. Hm."])
-			}, 20, -5, .75, 20)
-			set(DiverKnife, function() {
-				addInventory(DiverKnife)
-				say([DaveLeaning, "A diver knife! May come in handy."])
-			}, -7, -4, .5, 20)
-			set(Screwdriver, function() {
-				addInventory(Screwdriver)
-				say([DaveLeaning, "A screwdriver."])
-			}, 41, -16, .5, -40)
 			if (!state.storeFirst) {
 				state.storeFirst = 1
 				say([DaveLeaning, "There's a lot of stuff in here!"])
 			}
 		},
 		Underwater: function() {
-			Goggles.inScene = 1
 			set(Boat, null, 250, -250)
 			set(DaveDiving, null, -70, -40)
-			set(Goggles, null, -70, -52, .3)
 			set(Gold, function() {
 				say([DaveDiving, "Gold! So that's what's it all about! Sheryl found gold!",
 				])
 			}, -60, 115)
+			const transform = DaveDiving.style.transform
+			DaveDiving.animate(
+					[
+							{transform: transform},
+							{transform: translate(-70, -35)},
+							{transform: transform},
+					], {
+							duration: 4000,
+							fill: "forwards",
+							iterations: Infinity,
+					}
+			).play()
 			if (!state.sharkGone) {
 				state.sawShark = 1
 				set(Shark, function() {
-					say([DaveDiving, "Easy big fella… I should better get up…"])
+					say([DaveDiving, "Hey big fella… I should better get up…"])
 				}, 50, 30, 2)
+				Shark.animate(
+					[
+							{transform: Shark.style.transform},
+							{transform: translate(40, 30, 2)},
+							{transform: Shark.style.transform},
+					], {
+							duration: 10000,
+							easing: "ease",
+							fill: "forwards",
+							iterations: Infinity,
+					}
+				).play()
 				say([DaveDiving, "Whoa!!!!!!"])
 			}
-			set(Key, function() {
+			set(Keys, function() {
 				if (state.sharkGone) {
-					addInventory(Key, function() {
-						if (state.scene == "Bridge" && state.hasKey) {
-							consume(Key)
+					addInventory(Keys, function() {
+						if (state.scene == "Bridge" && state.hasKeys) {
+							consume(Keys)
 							say([Dave, "We can move again!"])
 						} else {
 							noUse()
 						}
 					})
-					state.hasKey = 1
-					say([DaveDiving, "I got the key!"])
+					state.hasKeys = 1
+					say([DaveDiving, "I got the keys!"])
 				} else {
 					say([DaveDiving, "I can't get around the shark!"])
 				}
 			}, 100, 125, .5)
+		},
+		End: function() {
+			set(Sea, null, 0, 0, 3)
+			set(BoatTop, null, 0, 0, .3, 45)
+			if (FX.style.display != "block") {
+				say([BoatTop, "Case solved!"
+				], function() {
+					BoatTop.animate(
+							[
+									{transform: BoatTop.style.transform},
+									{transform: translate(-350, 350, .3, 45)},
+							], {
+									duration: 10000,
+									fill: "forwards"
+							}
+					).play()
+					setTimeout(function() {
+						FX.innerHTML = "The End<br/><small>Thanks for playing!</small>"
+						FX.style.display = "block"
+					}, 2000)
+				})
+			}
 		},
 	}
 
@@ -501,6 +581,7 @@ function setLeftGoggles() {
 function removeFromInventory(e) {
 	e.style.visibility = "hidden"
 	state.inventory = state.inventory.filter(item => item != e)
+	updateInventory()
 }
 
 function consume(e) {
@@ -520,9 +601,6 @@ function noUse() {
 function updateInventory() {
 	let x = 0
 	state.inventory.forEach(e => {
-		if (e.inScene) {
-			return
-		}
 		e.style.transformOrigin = "left top"
 		e.style.transform = `translate(${x}px, 0px) rotate(0) scale(.5)`
 		e.style.visibility = "visible"
@@ -540,10 +618,13 @@ function updateInventory() {
 				say([currentDave(), "Don't drag, just click. I will know what to do."])
 			}
 		}
-		x += 30
+		x += 35
 	})
 	if (state.inventory.includes(Plate) && state.mousse) {
 		Mousse.style.visibility = "visible"
+	}
+	if (state.inventory.includes(Knife)) {
+		BloodOnKnife.style.visibility = "visible"
 	}
 }
 
@@ -634,7 +715,6 @@ function show(name) {
 	for (let key in window) {
 		const e = window[key]
 		if (e && e.tagName == "g") {
-			e.inScene = 0
 			e.style.visibility = "hidden"
 			e.onclick = null
 		}
@@ -659,15 +739,19 @@ function go(name) {
 	show(name)
 }
 
-function set(e, f, x, y, size, deg) {
-	if (e.used || (!e.inScene && state.inventory.includes(e))) {
-		return
-	}
-	e.style.transformOrigin = `50px 50px`
-	e.style.transform = `translate(${
+function translate(x, y, size, deg) {
+	return `translate(${
 		centerX - 50 + (x || 0)}px, ${
 		centerY - 50 + (y || 0)}px) rotateZ(${
 		deg || 0}deg) scale(${size || 1})`
+}
+
+function set(e, f, x, y, size, deg) {
+	if (e.used || state.inventory.includes(e)) {
+		return
+	}
+	e.style.transformOrigin = `50px 50px`
+	e.style.transform = translate(x, y, size, deg)
 	e.onclick = f ? function() {
 		B.talking || f()
 	} : null
@@ -698,12 +782,12 @@ function resize() {
 window.onload = function() {
 	;[...document.getElementsByTagName("g")].forEach(e => window[e.id] = e)
 	;["S", "B", "BM", "BP"].forEach(id => window[id] = document.getElementById(id))
-	;["SternCabin", "SternBridge", "SternDeck", "SternUnderwater",
-		"BridgeStern",
-		"DeckStern",
-		"CabinStern", "CabinStore",
+	;["CockpitCabin", "CockpitBridge", "CockpitDeck", "CockpitUnderwater",
+		"BridgeCockpit",
+		"DeckCockpit",
+		"CabinCockpit", "CabinStore",
 		"StoreCabin",
-		"UnderwaterStern"
+		"UnderwaterCockpit"
 	].forEach(id => document.getElementById(id).onclick = function() {
 		go(id.replace(/^[A-Z][a-z]*/, ""))
 	})
