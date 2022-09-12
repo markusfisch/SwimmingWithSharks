@@ -120,7 +120,11 @@ const visibles = [],
 					KnifeInHead.style.visibility = "hidden"
 					BloodOnKnife.style.visibility = "visible"
 					addInventory(Knife, function() {
-						if (state.scene == "Deck") {
+						if (state.scene == "Bridge") {
+							say([Dave, "This is too close. I should find a better place to throw the bloody knife."])
+						} else if (state.scene == "Cockpit") {
+							say([Dave, "I sure won't throw it here in the water!"])
+						} else if (state.scene == "Deck") {
 							consume(Knife)
 							BloodOnKnife.style.visibility = "hidden"
 							state.sharkGone = 1
@@ -132,7 +136,8 @@ const visibles = [],
 					say([Dave, "Sorry skipper, I need that."])
 				} else if (state.bodyFoundAndCabinLeft) {
 					let m
-					if (state.checkKeys && !state.keysChecked) {
+					if (state.checkKeys && !state.sawShark &&
+							!state.keysChecked) {
 						state.keysChecked = 1
 						m = "No keys."
 					} else {
@@ -218,10 +223,15 @@ const visibles = [],
 					{
 						text: () => "Taste the salmon mousse.",
 						action: function() {
-							say([Dave, "Not bad.",
-								Bruce, "And you're still alive, kid.",
-								Dave, "I think that settles the mousse theory.",
-							])
+							if (state.tasted) {
+								say([Dave, "Still delicious!"])
+							} else {
+								state.tasted = 1
+								say([Dave, "Not bad.",
+									Bruce, "And you're still alive, kid.",
+									Dave, "I think that settles the mousse theory.",
+								])
+							}
 						}
 					},
 					{
@@ -255,13 +265,7 @@ const visibles = [],
 			} else if (state.bodyFoundAndCabinLeft) {
 				set(Bruce, function() {
 					let conv
-					if (state.sawShark) {
-						conv = [Dave, "I know where the keys are!",
-							Bruce, "Really?",
-							Dave, "They're on the bottom of the sea! But there's a shark and I can't get them.",
-							Bruce, "Hm, so you need something to lure him away.",
-						]
-					} else if (state.checkKeys) {
+					if (state.checkKeys && !state.sawShark) {
 						conv = [Dave, "Have you seen the keys for the boat?",
 							Bruce, "No, I haven't. We should better find them!",
 						]
@@ -421,7 +425,7 @@ const visibles = [],
 					Watch.style.visibility = "hidden"
 					say([Dave, "That… was clearly your own fault!",
 						Sheryl, "Help me! You idiot!",
-						Dave, "I'll be back with the Coast Guard!",
+						Dave, "Take this lifebelt - I'll be back with the Coast Guard! Promise!",
 					], function() {
 						show("End")
 					})
@@ -429,12 +433,13 @@ const visibles = [],
 			} else if (state.bodyFound) {
 				set(Dave, null, -75)
 				set(Amanda, function() {
-					if (state.sawShark) {
-						say([Dave, "I found the keys! They're on the bottom of the sea! But there's a shark and I can't get them.",
-							Amanda, "A shark!",
-							Dave, "Yes. Do you have any idea how to get rid of the shark?",
-							Amanda, "Sorry, I don't know much about sharks. Just that they can smell blood from miles away.",
-						])
+					const foundKeys = [Dave, "I found the keys! They're on the bottom of the sea! But there's a shark and I can't get them.",
+						Amanda, "A shark!",
+						Dave, "Yes. Do you have any idea how to get rid of the shark?",
+						Amanda, "Sorry, I don't know much about sharks. Just that they can smell blood from miles away.",
+					]
+					if (state.sawShark && state.checkKeys) {
+						say(foundKeys)
 					} else if (state.keysChecked) {
 						say([Dave, "The skipper had no keys.",
 							Amanda, "Then we're dead in the water. And it looks like there's a storm coming…",
@@ -448,6 +453,9 @@ const visibles = [],
 							Amanda, "Exactly. Maybe the skipper still has the keys?",
 						], function() {
 							state.checkKeys = 1
+							if (state.sawShark) {
+								say(foundKeys)
+							}
 						})
 					}
 				})
@@ -478,15 +486,15 @@ const visibles = [],
 					say([currentDave(), "Oh, I found a laxative."])
 				})
 				say([DaveLeaning, "A first aid kit. I'm afraid it's too late for that."])
-			}, -66, 47, .4, 10)
+			}, -22, 27, .4, -15)
 			set(Bra, function() {
 				say([DaveLeaning, "A bra? Well maybe the skipper was a ladies' man after all.",
-					DaveLeaning, "Better leave it here.",
+					DaveLeaning, "Better leave it here. Won't look to good on me.",
 				])
-			}, -6, 18, .5, 180)
+			}, -5, -5, .5, 140)
 			if (!state.storeFirst) {
 				state.storeFirst = 1
-				say([DaveLeaning, "There's a lot of stuff in here!"])
+				say([DaveLeaning, "What's here?"])
 			}
 		},
 		Underwater: function() {
@@ -545,10 +553,12 @@ const visibles = [],
 			}, 100, 125, .5)
 		},
 		End: function() {
+			state.inventory.length = 0
 			set(Sea, null, 0, 0, 3)
 			set(BoatTop, null, 0, 0, .3, 45)
 			if (FX.style.display != "block") {
-				say([BoatTop, "Case solved!"
+				say([BoatTop, "You can't just leave me here! There are sharks in the water!",
+					BoatTop, "You still have your diving watch, Poison Ivy!"
 				], function() {
 					BoatTop.animate(
 							[
@@ -570,13 +580,6 @@ const visibles = [],
 
 let centerX,
 	centerY
-
-function setLeftGoggles() {
-	set(Goggles, function() {
-		addInventory(Goggles)
-		say([Dave, "Finally!"])
-	}, -60, 42, .3, -10)
-}
 
 function removeFromInventory(e) {
 	e.style.visibility = "hidden"
@@ -635,6 +638,19 @@ function addInventory(item, f) {
 		state.inventory.push(item)
 		updateInventory()
 	}
+}
+
+function setLeftGoggles() {
+	set(Goggles, function() {
+		addInventory(Goggles, function() {
+			if (state.scene == "Underwater") {
+				say([currentDave(), "Already wearing them."])
+			} else {
+				noUse()
+			}
+		})
+		say([Dave, "Finally!"])
+	}, -60, 42, .3, -10)
 }
 
 function clear() {
@@ -733,6 +749,11 @@ function go(name) {
 		return
 	} else if (name == "Underwater" && !state.inventory.includes(Goggles)) {
 		say([Dave, "I need diving goggles to see anything."])
+		return
+	} else if (name == "Store" && state.leftGoggle && !state.hasKeys) {
+		say([CabinStore, "Occupied.",
+			Dave, "Right."
+		])
 		return
 	}
 	clear()
