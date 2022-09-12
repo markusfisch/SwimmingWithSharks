@@ -36,15 +36,22 @@ const visibles = [],
 					set(Sheryl, function() {
 						say([Dave, [
 							{
-								text: () => state.swimming
-									? "So you found something down there?"
-									: "Hi, Sheryl, you swimming?",
+								text: () => [
+										"Hi, Sheryl, you swimming?",
+										"So you found something down there?",
+										"Just fish and sand?",
+										null,
+									][state.swimming || 0],
 								action: function() {
-									say([Sheryl, state.swimming
-										? "No, just fish and sand."
-										: "None of your business, Dave."
-									])
-									state.swimming = 1
+									state.swimming = state.swimming || 0
+									say([Sheryl, [
+										"None of your business, Dave.",
+										"No, just fish and sand.",
+										"And some really big sharks.",
+									][state.swimming]])
+									if (state.swimming < 3) {
+										++state.swimming
+									}
 								}
 							},
 							{
