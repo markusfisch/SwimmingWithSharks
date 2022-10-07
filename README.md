@@ -15,5 +15,5 @@ Play it [here][play]. Works on your phone, too.
 	$ npm install --global esbuild
 
 [js13kgames]: http://js13kgames.com/entries/2022
-[play]: http://hhsw.de/sites/proto/js13k2022/
+[play]: http://hhsw.de/sites/sws/
 [esbuild]: https://github.com/evanw/esbuild
