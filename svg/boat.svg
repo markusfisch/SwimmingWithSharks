@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient gradientUnits="userSpaceOnUse" x1="1573" y1="-722" x2="1573" y2="-115" id="sky" gradientTransform="matrix(-0.262139, 0, 0, 0.262139, 409.172849, 83.528654)">
+<linearGradient gradientUnits="userSpaceOnUse" x1="1573" y1="-722" x2="1573" y2="-115" id="sky" gradientTransform="matrix(-0.108565, 0, 0, -0.108565, 167.600892, 18.682279)">
 <stop offset="0" style="stop-color: rgba(113, 182, 255, 1)"/>
 <stop offset="1" style="stop-color: rgba(11, 129, 255, 1)"/>
 </linearGradient>
@@ -14,7 +14,7 @@
 <rect x="-2000" y="104" width="3995" height="335" style="fill: url(#sea);"/>
 <path style="fill: rgb(255, 255, 255);" d="M -213 134 L -241 142 C -241 142 -242 174 -242 174 L -180 174 C -180 174 -167 154 -167 154"/>
 <path style="fill: rgb(255, 255, 255);" d="M -265 54 L -108 48 L -65 -29 L 46 -29 L 54 -62 L 74 -69 L 98 -29 L 243 33 L 346 29 C 217 229 -272 218 -265 54 Z"/>
-<rect x="-2000" y="104" width="3995" height="335" style="fill: rgba(43, 41, 170, 0.5);"/>
+<rect x="-2000" y="104" width="3995" height="335" style="fill: rgba(62, 59, 255, 0.5);"/>
 <path style="fill: rgb(13, 130, 255);" d="M 104 -13 L 189 25 L 64 30 L 59 -12 L 104 -13 Z"/>
 <path style="fill: rgb(13, 130, 255);" d="M -48 -11 L -68 35 L 56 31 L 51 -12 L -48 -11 Z"/>
 <path style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 4px; stroke-linejoin: round; stroke-linecap: round;" d="M 343 31 L 365 2 L 152 38"/>
@@ -80,5 +80,5 @@
 <g transform="matrix(1, 0, 0, -1, -360, 230)" id="Underwater">
 <path style="fill: rgba(255, 255, 255, 0.5);" d="M 45 -8 L 45 8 L 35 8 L 51 28 L 66 8 C 66 8 56 8 56 8 L 56 -8 C 56 -8 45 -8 45 -8 Z" id="UnderwaterCockpit"/>
 </g>
-<path style="fill: rgb(11, 11, 46);" d="M -389 438 L -264 411 C -264 411 -134 425 -134 425 L 11 407 L 170 427 L 300 408 L 561 439 L 2000 439 L 2000 2000 L -2000 2000 L -2000 439 L -389 439 L -389 438 Z"/>
+<path style="fill: rgb(30, 30, 136);" d="M -389 438 L -264 411 C -264 411 -134 425 -134 425 L 11 407 L 170 427 L 300 408 L 561 439 L 2000 439 L 2000 2000 L -2000 2000 L -2000 439 L -389 439 L -389 438 Z"/>
 </svg>
