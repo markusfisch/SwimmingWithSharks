@@ -613,7 +613,7 @@ function updateInventory() {
 	let x = 0
 	state.inventory.forEach(e => {
 		e.style.transformOrigin = "left top"
-		e.style.transform = `translate(${x}px, 0px) rotate(0) scale(.5)`
+		e.style.transform = `translate(${x}px, 0px) scale(.5)`
 		e.style.visibility = "visible"
 		e.onclick = function() {
 			if (B.talking) {
